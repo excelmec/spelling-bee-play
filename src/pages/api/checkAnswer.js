@@ -2,18 +2,19 @@ import questionModel from "@/models/questionModel";
 import userAnswerModel from "@/models/userAnswerModel";
 import userModel from "@/models/userModel";
 import connectDB from "@/utils/connectDB";
+import axios from "axios";
 
 export default async function handler(req, res) {
   async function getScore(questionId, answer) {
     const question = await questionModel.findOne({
       _id: questionId,
     });
-    const letters = question.letters;
-    var score = 1;
+    const letters = question.letters.concat(question.mainLetter);
+    var score = 0;
     var checkIfAllLetters = true;
     for (var i = 0; i < answer.length; i++) {
       if (letters.includes(answer[i])) {
-        score += 0.5;
+        score += 1;
       }
       if (!letters.includes(answer[i])) {
         checkIfAllLetters = false;
@@ -35,6 +36,13 @@ export default async function handler(req, res) {
       if (question.answers.includes(answer)) {
         res.status(200).json({ message: "Answer already exists" });
       } else {
+        const dictionary = await axios.get(
+          `${process.env.DICTIONARY_API_URL}/${answer}`
+        );
+        if(dictionary.status===404){
+          res.status(500).json({ message: "Answer is not a word" });
+          return;
+        }
         question.answers.push(answer);
         await question.save();
         if (
@@ -49,7 +57,7 @@ export default async function handler(req, res) {
               $inc: { totalScore: await getScore(req.body.questionId, answer) },
               $push: {
                 score: {
-                  point:await  getScore(req.body.questionId, answer),
+                  point: await getScore(req.body.questionId, answer),
                   answer: answer,
                 },
               },
@@ -61,17 +69,17 @@ export default async function handler(req, res) {
             questionId: req.body.questionId,
             excelId: req.body.excelId,
             score: {
-              point:await getScore(req.body.questionId, answer),
+              point: await getScore(req.body.questionId, answer),
               answer: answer,
             },
-            totalScore: 1,
+            totalScore: await getScore(req.body.questionId, answer),
           });
           await userAnswer.save();
         }
         const user = await userModel.findOne({
           excelId: req.body.excelId,
         });
-        user.score += getScore(req.body.questionId, answer);
+        user.score += await getScore(req.body.questionId, answer);
         await user.save();
         res.status(200).json({ message: "Answer added" });
       }
