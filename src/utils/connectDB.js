@@ -1,7 +1,7 @@
 import { connect } from "mongoose";
-const { NEXT_PUBLIC_MONGODB_URI } = process.env;
+const { MONGODB_URI } = process.env;
 
-if (!NEXT_PUBLIC_MONGODB_URI) {
+if (!MONGODB_URI) {
   throw new Error(
     "Please define the MONGODB_URI environment variable inside .env.local"
   );
