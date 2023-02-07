@@ -1,4 +1,5 @@
 import AccountHandler from "@/auth/accountHandler";
+import AuthHandler from "@/auth/authHandler";
 import { Footer, Navbar } from "@/components";
 import { CustomTitle } from "@/utils";
 import axios from "axios";
@@ -10,23 +11,9 @@ function Home() {
 
   useEffect(() => {
     if (AccountHandler.isUserLoggedIn()) {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_PROFILE_BACKEND_URL}/profile`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "accessToken"
-            )}`,
-          },
-        })
-        .then(
-          (response) => {
-            // console.log("Navpro:",response)
-            setProfile(response.data);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+      AccountHandler.asyncGetUserProfile().then((res) => {
+        if (res != null) setProfile(res);
+      });
     }
   }, []);
 
@@ -35,18 +22,10 @@ function Home() {
       AccountHandler.logInUser();
     }
   };
-  const onLogoutClick = () => {
-    AccountHandler.logOutUser();
-  };
   if (profile == null) {
-    // AccountHandler.asyncGetUserProfile()
-    //    .then((resposne) => {
-
-    // if (res != null) setProfile(res);
-    // console.log("profile: ",profile)
-    //  })
-    //  .catch(() => console.log("Failed to fetch profile pic"));
-    console.log(AccountHandler.asyncGetUserProfile());
+    AccountHandler.asyncGetUserProfile().then((res) => {
+      if (res != null) setProfile(res);
+    });
   }
 
   return (
