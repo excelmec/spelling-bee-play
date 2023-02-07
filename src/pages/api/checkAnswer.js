@@ -33,26 +33,27 @@ export default async function handler(req, res) {
         _id: req.body.questionId,
       });
       const answer = req.body.answer.toUpperCase();
-      if (question.answers.includes(answer)) {
-        res.status(200).json({ message: "Answer already exists" });
-      } else {
-        const dictionary = await axios.get(
-          `${process.env.DICTIONARY_API_URL}/${answer}`
-        );
-        if(dictionary.status===404){
-          res.status(500).json({ message: "Answer is not a word" });
-          return;
+      const accessToken = req.headers.authorization;
+      const response = await axios.get(
+        process.env.PROFILE_BACKEND_URL + "/profile/view",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-        question.answers.push(answer);
-        await question.save();
+      );
+      const name = response.data.name;
+      const email = response.data.email;
+      const excelId = response.data.id;
+      if (question.answers.some((a) => a.answer === answer)) {
         if (
           await userAnswerModel.findOne({
             questionId: req.body.questionId,
-            excelId: req.body.excelId,
+            excelId: excelId,
           })
         ) {
           const userAnswer = await userAnswerModel.findOneAndUpdate(
-            { questionId: req.body.questionId, excelId: req.body.excelId },
+            { questionId: req.body.questionId, excelId: excelId },
             {
               $inc: { totalScore: await getScore(req.body.questionId, answer) },
               $push: {
@@ -67,7 +68,7 @@ export default async function handler(req, res) {
         } else {
           const userAnswer = new userAnswerModel({
             questionId: req.body.questionId,
-            excelId: req.body.excelId,
+            excelId: excelId,
             score: {
               point: await getScore(req.body.questionId, answer),
               answer: answer,
@@ -77,7 +78,61 @@ export default async function handler(req, res) {
           await userAnswer.save();
         }
         const user = await userModel.findOne({
-          excelId: req.body.excelId,
+          excelId: excelId,
+        });
+        user.score += await getScore(req.body.questionId, answer);
+        await user.save();
+        res
+          .status(200)
+          .json({ message: "Answer already exists", answer: response.data });
+      } else {
+        const dictionary = await axios.get(
+          `${process.env.DICTIONARY_API_URL}/${answer}`
+        );
+        if (dictionary.status === 404) {
+          res.status(500).json({ message: "Answer is not a word" });
+          return;
+        }
+        question.answers.push({
+          answer: answer,
+          name: name,
+          email: email,
+          excelId: excelId,
+        });
+        await question.save();
+        if (
+          await userAnswerModel.findOne({
+            questionId: req.body.questionId,
+            excelId: excelId,
+          })
+        ) {
+          const userAnswer = await userAnswerModel.findOneAndUpdate(
+            { questionId: req.body.questionId, excelId: excelId },
+            {
+              $inc: { totalScore: await getScore(req.body.questionId, answer) },
+              $push: {
+                score: {
+                  point: await getScore(req.body.questionId, answer),
+                  answer: answer,
+                },
+              },
+            }
+          );
+          await userAnswer.save();
+        } else {
+          const userAnswer = new userAnswerModel({
+            questionId: req.body.questionId,
+            excelId: excelId,
+            score: {
+              point: await getScore(req.body.questionId, answer),
+              answer: answer,
+            },
+            totalScore: await getScore(req.body.questionId, answer),
+          });
+          await userAnswer.save();
+        }
+        const user = await userModel.findOne({
+          excelId: excelId,
         });
         user.score += await getScore(req.body.questionId, answer);
         await user.save();
