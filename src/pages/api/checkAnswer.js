@@ -45,6 +45,19 @@ export default async function handler(req, res) {
       const name = response.data.name;
       const email = response.data.email;
       const excelId = response.data.id;
+      const userAnswers = await userAnswerModel.findOne({
+        excelId: excelId,
+        questionId: req.body.questionId,
+      });
+      if (userAnswers) {
+        if (userAnswers.score.find((s) => s.answer === answer)) {
+          res
+            .status(200)
+            .json({ message: "You have already answered this word" });
+          return;
+        }
+      }
+
       const aldreadyAnswered = question.answers.find(
         (a) => a.answer === answer
       );
