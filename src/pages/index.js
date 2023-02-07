@@ -1,13 +1,14 @@
 import AccountHandler from "@/auth/accountHandler";
-import AuthHandler from "@/auth/authHandler";
 import { Footer, Navbar } from "@/components";
 import { CustomTitle } from "@/utils";
-import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 function Home() {
   const [profile, setProfile] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (AccountHandler.isUserLoggedIn()) {
@@ -17,11 +18,14 @@ function Home() {
     }
   }, []);
 
-  const onLoginClick = () => {
-    if (!AccountHandler.isUserLoggedIn()) {
-      AccountHandler.logInUser();
-    }
-  };
+  // const onLoginClick = () => {
+  //   if (!AccountHandler.isUserLoggedIn()) {
+  //     AccountHandler.logInUser().then(() => {
+  //       AccountHandler.asyncGetUserProfile();
+  //     });
+  //   }
+  //   router.push("/spellbee");
+  // };
   if (profile == null) {
     AccountHandler.asyncGetUserProfile().then((res) => {
       if (res != null) setProfile(res);
@@ -38,7 +42,11 @@ function Home() {
           <div
             className={styles.button}
             onClick={() => {
-              onLoginClick();
+              if (!AccountHandler.isUserLoggedIn()) {
+                alert("Please login to play the game");
+                return;
+              }
+              router.push("/spellbee");
             }}
           >
             Play Now
