@@ -11,7 +11,7 @@ const questionSchema = new Schema(
       required: true,
     },
     answers: {
-      type: [String],
+      type: Array,
     },
     releaseTime: {
       type: Date,

@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         checkIfAllLetters = false;
       }
     }
-    if (checkIfAllLetters) {
+    if (checkIfAllLetters&&answer.length===letters.length) {
       score += 5;
     }
     return score;
