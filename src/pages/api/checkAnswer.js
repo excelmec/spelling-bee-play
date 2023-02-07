@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         checkIfAllLetters = false;
       }
     }
-    if (checkIfAllLetters&&answer.length===letters.length) {
+    if (checkIfAllLetters && answer.length === letters.length) {
       score += 5;
     }
     return score;
@@ -45,7 +45,10 @@ export default async function handler(req, res) {
       const name = response.data.name;
       const email = response.data.email;
       const excelId = response.data.id;
-      if (question.answers.some((a) => a.answer === answer)) {
+      const aldreadyAnswered = question.answers.find(
+        (a) => a.answer === answer
+      );
+      if (aldreadyAnswered) {
         if (
           await userAnswerModel.findOne({
             questionId: req.body.questionId,
@@ -82,9 +85,10 @@ export default async function handler(req, res) {
         });
         user.score += await getScore(req.body.questionId, answer);
         await user.save();
-        res
-          .status(200)
-          .json({ message: "Answer already exists", answer: response.data });
+        res.status(200).json({
+          message: "Answer already exists",
+          answer: aldreadyAnswered,
+        });
       } else {
         const dictionary = await axios.get(
           `${process.env.DICTIONARY_API_URL}/${answer}`
