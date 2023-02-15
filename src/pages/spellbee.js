@@ -4,7 +4,7 @@ import Buttons from "to_be_merged/components/buttons";
 import Letters from "to_be_merged/components/letters";
 import WordList from "to_be_merged/components/wordList";
 import useSwr from "swr";
-import Header from "@/components/Game/header";
+import Header from "to_be_merged/components/header";
 import Rankings from "to_be_merged/components/rankings";
 import { rankingLevels } from "to_be_merged/components/rankings";
 import UserRanking from "to_be_merged/components/userRanking";
