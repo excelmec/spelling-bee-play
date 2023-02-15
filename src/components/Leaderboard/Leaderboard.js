@@ -3,6 +3,7 @@ export default function Leaderboard() {
     <div className="text-white">
       <h1 className="text-5xl font-bold tracking-wider">Leaderboard</h1>
       <div className="flex flex-col gap-4 text-center w-96 mx-auto overflow-y-hidden">
+        
         <div className="flex flex-row justify-evenly text-xl">
           <p>Rank</p>
           <p>Name</p>
