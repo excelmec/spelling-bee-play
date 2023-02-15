@@ -63,7 +63,7 @@
     @apply border flex flex-col fixed top-16 z-20 bg-white w-1/3 md:w-1/4 right-2;
   }
   .menu-item {
-    @apply p-2 w-full hover:bg-gray-100 active:bg-gray-200;
+    @apply p-2 w-full hover:bg-gray-800 active:bg-slate-900;
   }
   .ranking-bar {
     @apply flex flex-row justify-between items-center z-10 mr-2;
@@ -87,10 +87,10 @@
     @apply flex text-yellow-300 text-3xl font-medium z-20 w-3 items-center justify-center mb-1;
   }
   .how-to {
-    @apply border shadow-sm fixed z-30 bg-white top-10 w-full md:w-2/3 p-4;
+    @apply border shadow-sm fixed z-30 bg-blue-700 top-10 w-full md:w-2/3 p-4;
   }
   .rankings {
-    @apply border shadow-sm fixed z-30 bg-white top-10 w-full md:w-2/3 p-4;
+    @apply border shadow-sm fixed z-30 bg-blue-700 top-10 w-full md:w-2/3 p-4;
   }
   .hints {
     @apply border shadow-sm fixed z-30 bg-white top-10 w-full md:w-2/3 p-4;
