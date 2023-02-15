@@ -4,15 +4,15 @@ import Buttons from "to_be_merged/components/buttons";
 import Letters from "to_be_merged/components/letters";
 import WordList from "to_be_merged/components/wordList";
 import useSwr from "swr";
-import Header from "to_be_merged/components/header";
+import Header from "../components/Game/header";
 import Rankings from "to_be_merged/components/rankings";
 import { rankingLevels } from "to_be_merged/components/rankings";
 import UserRanking from "to_be_merged/components/userRanking";
 import HowTo from "to_be_merged/components/howTo";
 import Loading from "to_be_merged/components/loading";
-import Hints from "@/components/Game/hints";
-import AnswerList from "@/components/Game/answerList";
-import Realistic from "@/components/Game/realistic";
+import Hints from "../components/Game/hints";
+import AnswerList from "../components/Game/answerList";
+import Realistic from "../components/Game/realistic";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 

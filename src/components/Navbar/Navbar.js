@@ -1,5 +1,5 @@
-import { excelLogo } from "@/assets";
-import AccountHandler from "@/auth/accountHandler";
+import { excelLogo } from "../../assets";
+import AccountHandler from "../../auth/accountHandler";
 import Image from "next/image";
 import React from "react";
 import styles from "./Navbar.module.css";

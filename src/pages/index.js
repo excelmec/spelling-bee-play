@@ -1,6 +1,6 @@
-import AccountHandler from "@/auth/accountHandler";
-import { Footer, Navbar } from "@/components";
-import { CustomTitle } from "@/utils";
+import AccountHandler from "../auth/accountHandler";
+import { Footer, Navbar } from "../components";
+import { CustomTitle } from "../utils";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
