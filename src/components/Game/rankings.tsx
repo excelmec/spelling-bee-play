@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
-import { answerSum } from '../pages/index'
+import { answerSum } from '../../pages/index'
 
 export const rankingLevels = [
   {
@@ -12,7 +12,7 @@ export const rankingLevels = [
     minScoreMultiplier: .125
   },
   {
-    name: "Moving Up", 
+    name: "Moving Up",
     minScoreMultiplier: .25
   },
   {
@@ -60,7 +60,7 @@ export default function Rankings({ data, showRankingsToggle }) {
           <AiOutlineClose />
         </button>
       </div>
-      <div className='p-4 font-semithin text-lg'>   
+      <div className='p-4 font-semithin text-lg'>
         <p >Below are the minimum scores for the rankings of the current puzzle.</p>
         <p> Please refer to <i>How to Play</i> for scoring system.</p>
       </div>
@@ -70,6 +70,6 @@ export default function Rankings({ data, showRankingsToggle }) {
         ))}
       </ul>
     </div>
-    
+
   )
 }
