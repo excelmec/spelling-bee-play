@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import Buttons from "../components/Game/buttons";
 import Letters from "../components/Game/letters";
@@ -16,6 +16,9 @@ import Loading from "../components/Game/loading";
 import Hints from "../components/Game/hints";
 import AnswerList from "../components/Game/answerList";
 import Realistic from "../components/Game/realistic";
+import { UserContext } from "../contexts/UserContext";
+import { useRouter } from "next/router";
+import AuthHandler from "../auth/authHandler";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -45,8 +48,10 @@ export const answerSum = (wordList, pangramCount) => {
   return sum;
 };
 
-export default function spellbee() {
+export default function SpellBee() {
   const { data, error } = useSwr("/api/bee", fetcher);
+  const { profile } = useContext(UserContext);
+  const router = useRouter();
   const [userWord, setUserWord] = useState("");
   const [foundWords, setFoundWords] = useState([]);
   const [foundPangrams, setFoundPangrams] = useState([]);
@@ -59,6 +64,13 @@ export default function spellbee() {
   const [rankIndex, setRankIndex] = useState(0);
   const [currentPoints, setCurrentPoints] = useState(0);
   const [revealAnswers, setRevealAnswers] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("refreshToken") == null) {
+      router.push("/");
+      return;
+    }
+  }, []);
 
   const logKey = (e) => {
     if (e.keyCode === 8) {
@@ -250,7 +262,7 @@ export default function spellbee() {
 
   return (
     <MainLayout>
-      <AnswerDialog/>
+      <AnswerDialog />
       <div
         className="game"
         style={{
@@ -286,7 +298,7 @@ export default function spellbee() {
       /> */}
         {/* <Realistic message={message} /> */}
         {/* <div className="ranking-game-div"> */}
-          {/* <div className="ranking-wordlist">
+        {/* <div className="ranking-wordlist">
           <UserRanking currentPoints={currentPoints} rankIndex={rankIndex} />
           {revealAnswers ? (
             <AnswerList
@@ -297,57 +309,55 @@ export default function spellbee() {
             <WordList words={foundWords} />
           )}
         </div> */}
-            <div className="w-full fixed flex flex-row items-center justify-center">
-              {message && <p className="message">{message}</p>}
-              {pointsAdded && (
-                <p className="points-added rounded-full animate-ping bg-white">
-                  {pointsAdded}
-                </p>
-              )}
-            </div>
-            {userWord.length < 1 ? (
-              <h2 className="input self-center text-gray-300">
-                <span className="cursor">|</span>Type or Click
-              </h2>
-            ) : (
-              <h2 className="input self-center">
-                {userWord.split("").map((i) => (
-                  <span
-                    key={i}
-                    className={
-                      i === data.gameData.yesterday.centerLetter.toUpperCase()
-                        ? "text-yellow-500"
-                        : data.gameData.yesterday.outerLetters.includes(
-                            i.toLowerCase()
-                          )
-                        ? "text-gray-100"
-                        : "text-gray-300"
-                    }
-                  >
-                    {i}
-                  </span>
-                ))}
-                <span className="cursor">|</span>
-              </h2>
-            )}
-            <Letters
-              data={data && data.gameData.yesterday}
-              shuffledLetters={
-                shuffledLetters === null
-                  ? data.gameData.yesterday.outerLetters.map((i) =>
-                      i.toUpperCase()
-                    )
-                  : shuffledLetters.map((i) => i.toUpperCase())
-              }
-              setLetter={(e) => setUserWord(userWord.concat(e))}
-            />
-            <Buttons
-              revealedAnswers={revealAnswers}
-              shuffle={() => shuffle()}
-              clearWord={() => clearWord()}
-              searchWord={() => searchWord()}
-            />
+        <div className="w-full fixed flex flex-row items-center justify-center">
+          {message && <p className="message">{message}</p>}
+          {pointsAdded && (
+            <p className="points-added rounded-full animate-ping bg-white">
+              {pointsAdded}
+            </p>
+          )}
         </div>
+        {userWord.length < 1 ? (
+          <h2 className="input self-center text-gray-300">
+            <span className="cursor">|</span>Type or Click
+          </h2>
+        ) : (
+          <h2 className="input self-center">
+            {userWord.split("").map((i) => (
+              <span
+                key={i}
+                className={
+                  i === data.gameData.yesterday.centerLetter.toUpperCase()
+                    ? "text-yellow-500"
+                    : data.gameData.yesterday.outerLetters.includes(
+                        i.toLowerCase()
+                      )
+                    ? "text-gray-100"
+                    : "text-gray-300"
+                }
+              >
+                {i}
+              </span>
+            ))}
+            <span className="cursor">|</span>
+          </h2>
+        )}
+        <Letters
+          data={data && data.gameData.yesterday}
+          shuffledLetters={
+            shuffledLetters === null
+              ? data.gameData.yesterday.outerLetters.map((i) => i.toUpperCase())
+              : shuffledLetters.map((i) => i.toUpperCase())
+          }
+          setLetter={(e) => setUserWord(userWord.concat(e))}
+        />
+        <Buttons
+          revealedAnswers={revealAnswers}
+          shuffle={() => shuffle()}
+          clearWord={() => clearWord()}
+          searchWord={() => searchWord()}
+        />
+      </div>
       {/* </div> */}
     </MainLayout>
   );

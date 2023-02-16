@@ -5,7 +5,11 @@ import { Toaster } from "react-hot-toast";
 export default function App({ Component, pageProps }) {
   return (
     <UserDetails>
-      <Toaster/>
+      <Toaster
+        style={{
+          fontFamily: "Mulish",
+        }}
+      />
       <Component {...pageProps} />
     </UserDetails>
   );
