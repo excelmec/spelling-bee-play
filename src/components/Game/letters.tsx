@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react'
 
 
 export default function Letters({setLetter, shuffledLetters, data}) {
-  
+  if(!data)
+  return null
 
   return (
     <div className="w-full letters justify-center flex flex-row md:p-6">
@@ -14,7 +15,7 @@ export default function Letters({setLetter, shuffledLetters, data}) {
       </div>
       <div className=" flex flex-col h-full -mt-10 md:-mt-14">
         <Hexagon center={false} letter={shuffledLetters && shuffledLetters[2]} setLetter={() => setLetter(shuffledLetters[2])}/>
-        <Hexagon data-testid="center-letter" center={true} letter={data && data.centerLetter.toUpperCase()} setLetter={() => setLetter(data.centerLetter.toUpperCase())}/>
+        <Hexagon data-testid="center-letter" center={true} letter={data && data?.mainLetter?.toUpperCase()} setLetter={() => setLetter(data?.mainLetter?.toUpperCase())}/>
         <Hexagon center={false} letter={shuffledLetters && shuffledLetters[4]} setLetter={() => setLetter(shuffledLetters[4])}/>
       </div>
       <div className="flex flex-col">

@@ -46,8 +46,8 @@ export const answerSum = (wordList, pangramCount) => {
 };
 
 export default function SpellBee() {
-  const { data, error } = useSwr("/api/bee", fetcher);
-  console.log(data)
+  const { data, error } = useSwr("/api/question", fetcher);
+  console.log(data);
   const router = useRouter();
   const [userWord, setUserWord] = useState("");
   const [foundWords, setFoundWords] = useState([]);
@@ -81,181 +81,121 @@ export default function SpellBee() {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("keydown", logKey);
-    return () => {
-      window.removeEventListener("keydown", logKey);
-    };
-  }, [logKey]);
+  // useEffect(() => {
+  //   window.addEventListener("keydown", logKey);
+  //   return () => {
+  //     window.removeEventListener("keydown", logKey);
+  //   };
+  // }, [logKey]);
 
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!data) {
+  //     return;
+  //   }
 
-    if (localStorage.getItem("expiration") == null) {
-      localStorage.setItem(
-        "expiration",
-        data.gameData.today.expiration.toString().slice(0, 8)
-      );
-      localStorage.setItem("foundWords", "");
-      localStorage.setItem("pangrams", "");
-      localStorage.setItem("revealed", "false");
-    } else if (
-      data &&
-      localStorage.getItem("expiration") <= Date.now().toString().slice(0, 8)
-    ) {
-      localStorage.setItem(
-        "expiration",
-        data.gameData.today.expiration.toString().slice(0, 8)
-      );
-      localStorage.setItem("foundWords", "");
-      localStorage.setItem("pangrams", "");
-      localStorage.setItem("revealed", "false");
-      userRanking();
-      setFoundWords([]);
-    } else if (
-      localStorage.getItem("expiration") > Date.now().toString().slice(0, 8) &&
-      localStorage.getItem("revealed") === "true"
-    ) {
-      setRevealAnswers(true);
-      setFoundWords(localStorage.getItem("foundWords").split(","));
-      localStorage.getItem("pangrams") !== null &&
-        setFoundPangrams(localStorage.getItem("pangrams").split(","));
-      userRanking();
-    } else if (
-      localStorage.getItem("expiration") > Date.now().toString().slice(0, 8) &&
-      localStorage.getItem("foundWords") !== null
-    ) {
-      setFoundWords(localStorage.getItem("foundWords").split(","));
-      localStorage.getItem("pangrams") !== null &&
-        setFoundPangrams(localStorage.getItem("pangrams").split(","));
-      userRanking();
-    } else {
-      localStorage.setItem(
-        "expiration",
-        data.gameData.today.expiration.toString().slice(0, 8)
-      );
-      localStorage.setItem("foundWords", "");
-      localStorage.setItem("pangrams", "");
-      localStorage.setItem("revealed", "false");
-      userRanking();
-      setFoundWords([]);
-    }
-  }, [data]);
+  //   if (localStorage.getItem("expiration") == null) {
+  //     localStorage.setItem(
+  //       "expiration",
+  //       data.gameData.today.expiration.toString().slice(0, 8)
+  //     );
+  //     localStorage.setItem("foundWords", "");
+  //     localStorage.setItem("pangrams", "");
+  //     localStorage.setItem("revealed", "false");
+  //   } else if (
+  //     data &&
+  //     localStorage.getItem("expiration") <= Date.now().toString().slice(0, 8)
+  //   ) {
+  //     localStorage.setItem(
+  //       "expiration",
+  //       data.gameData.today.expiration.toString().slice(0, 8)
+  //     );
+  //     localStorage.setItem("foundWords", "");
+  //     localStorage.setItem("pangrams", "");
+  //     localStorage.setItem("revealed", "false");
+  //     userRanking();
+  //     setFoundWords([]);
+  //   } else if (
+  //     localStorage.getItem("expiration") > Date.now().toString().slice(0, 8) &&
+  //     localStorage.getItem("revealed") === "true"
+  //   ) {
+  //     setRevealAnswers(true);
+  //     setFoundWords(localStorage.getItem("foundWords").split(","));
+  //     localStorage.getItem("pangrams") !== null &&
+  //       setFoundPangrams(localStorage.getItem("pangrams").split(","));
+  //     userRanking();
+  //   } else if (
+  //     localStorage.getItem("expiration") > Date.now().toString().slice(0, 8) &&
+  //     localStorage.getItem("foundWords") !== null
+  //   ) {
+  //     setFoundWords(localStorage.getItem("foundWords").split(","));
+  //     localStorage.getItem("pangrams") !== null &&
+  //       setFoundPangrams(localStorage.getItem("pangrams").split(","));
+  //     userRanking();
+  //   } else {
+  //     localStorage.setItem(
+  //       "expiration",
+  //       data.gameData.today.expiration.toString().slice(0, 8)
+  //     );
+  //     localStorage.setItem("foundWords", "");
+  //     localStorage.setItem("pangrams", "");
+  //     localStorage.setItem("revealed", "false");
+  //     userRanking();
+  //     setFoundWords([]);
+  //   }
+  // }, [data]);
 
-  useEffect(() => {
-    userRanking();
-  }, [foundWords]);
+  // useEffect(() => {
+  //   userRanking();
+  // }, [foundWords]);
 
   if (!data) {
     return <Loader />;
   }
-  if (error) console.log(error);
+  // if (error) console.log(error);
 
   const clearWord = () => {
     setUserWord(userWord.substring(0, userWord.length - 1));
   };
 
-  const searchWord = async () => {
-    if (userWord.length === 0) {
-      return;
-    } else if (userWord.length < 4) {
-      setMessage("Too short");
-      await new Promise((res) => setTimeout(res, 1000));
-      setMessage(null);
-    } else if (
-      !userWord.toLowerCase().includes(data.gameData.yesterday.centerLetter)
-    ) {
-      setMessage("Missing centre letter");
-      await new Promise((res) => setTimeout(res, 900));
-      setMessage(null);
-    } else if (foundWords.includes(userWord)) {
-      setMessage("Already found");
-      await new Promise((res) => setTimeout(res, 900));
-      setMessage(null);
-    } else if (
-      data.gameData.yesterday.pangrams.includes(userWord.toLowerCase())
-    ) {
-      setMessage("Pangram!");
-      setPointsAdded(`+ ${userWord.length + 4}`);
-      setFoundWords([userWord, ...foundWords]);
-      setFoundPangrams([userWord, ...foundPangrams]);
-      localStorage.setItem("foundWords", [userWord, ...foundWords].toString());
-      localStorage.setItem("pangrams", [userWord, ...foundPangrams].toString());
-      setUserWord("");
-      userRanking();
-      await new Promise((res) => setTimeout(res, 900));
-      setMessage(null);
-      setPointsAdded(null);
-    } else if (
-      data.gameData.yesterday.answers.includes(userWord.toLowerCase())
-    ) {
-      userWord.length === 4
-        ? setMessage("Good!")
-        : userWord.length === 5
-        ? setMessage("Nice!")
-        : userWord.length === 6
-        ? setMessage("Great!")
-        : setMessage("Fantastic!");
-      setPointsAdded(`+ ${userWord.length - 3}`);
-      setFoundWords([userWord, ...foundWords]);
-      localStorage.setItem("foundWords", [userWord, ...foundWords].toString());
-      setUserWord("");
-      () => userRanking();
-      await new Promise((res) => setTimeout(res, 900));
-      setMessage(null);
-      setPointsAdded(null);
-    } else if (
-      !data.gameData.yesterday.answers.includes(userWord.toLowerCase())
-    ) {
-      setMessage("Not in word list");
-      await new Promise((res) => setTimeout(res, 900));
-      setMessage(null);
-    }
-  };
-
   const shuffle = async () => {
-    let newArr = [...data.gameData.yesterday.outerLetters].sort(
-      () => Math.random() - 0.5
-    );
+    let newArr = [...data.letters].sort(() => Math.random() - 0.5);
     setShuffledLetters([]);
     await new Promise((res) => setTimeout(res, 200));
     setShuffledLetters(newArr);
   };
 
-  async function userRanking() {
-    if (localStorage.getItem("foundWords") === null) {
-      localStorage.setItem("foundWords", "");
-    }
-    if (localStorage.getItem("pangrams") === null) {
-      localStorage.setItem("pangrams", "");
-    }
-    let userPoints = answerSum(
-      localStorage.getItem("foundWords").split(","),
-      localStorage.getItem("pangrams").split(",")
-    );
-    let highestPoints = answerSum(
-      data?.gameData.yesterday.answers,
-      data?.gameData.yesterday.pangrams
-    );
+  // async function userRanking() {
+  //   if (localStorage.getItem("foundWords") === null) {
+  //     localStorage.setItem("foundWords", "");
+  //   }
+  //   if (localStorage.getItem("pangrams") === null) {
+  //     localStorage.setItem("pangrams", "");
+  //   }
+  //   let userPoints = answerSum(
+  //     localStorage.getItem("foundWords").split(","),
+  //     localStorage.getItem("pangrams").split(",")
+  //   );
+  //   let highestPoints = answerSum(
+  //     data?.gameData.yesterday.answers,
+  //     data?.gameData.yesterday.pangrams
+  //   );
 
-    if (userPoints === 0) {
-      setRankIndex(0);
-      return;
-    }
-    for (let i = 0; i < rankingLevels.length; i++) {
-      if (
-        rankingLevels &&
-        Math.floor(rankingLevels[i].minScoreMultiplier * highestPoints) >
-          userPoints
-      ) {
-        setRankIndex(i - 1);
-        setCurrentPoints(userPoints);
-        return;
-      }
-    }
-  }
+  //   if (userPoints === 0) {
+  //     setRankIndex(0);
+  //     return;
+  //   }
+  //   for (let i = 0; i < rankingLevels.length; i++) {
+  //     if (
+  //       rankingLevels &&
+  //       Math.floor(rankingLevels[i].minScoreMultiplier * highestPoints) >
+  //         userPoints
+  //     ) {
+  //       setRankIndex(i - 1);
+  //       setCurrentPoints(userPoints);
+  //       return;
+  //     }
+  //   }
+  // }
 
   return (
     <MainLayout>
@@ -325,11 +265,9 @@ export default function SpellBee() {
               <span
                 key={i}
                 className={
-                  i === data.gameData.yesterday.centerLetter.toUpperCase()
+                  i === data.mainLetter.toUpperCase()
                     ? "text-yellow-500"
-                    : data.gameData.yesterday.outerLetters.includes(
-                        i.toLowerCase()
-                      )
+                    : data.letters.includes(i.toLowerCase())
                     ? "text-gray-100"
                     : "text-gray-300"
                 }
@@ -341,10 +279,10 @@ export default function SpellBee() {
           </h2>
         )}
         <Letters
-          data={data && data.gameData.yesterday}
+          data={data}
           shuffledLetters={
             shuffledLetters === null
-              ? data.gameData.yesterday.outerLetters.map((i) => i.toUpperCase())
+              ? data?.letters?.map((i) => i.toUpperCase())
               : shuffledLetters.map((i) => i.toUpperCase())
           }
           setLetter={(e) => setUserWord(userWord.concat(e))}
@@ -354,8 +292,8 @@ export default function SpellBee() {
           shuffle={() => shuffle()}
           clearWord={() => clearWord()}
           searchWord={() => searchWord()}
-          answer = {userWord}
-          qnid = {data.gameData.yesterday.qnid}
+          answer={userWord}
+          qnid={data?._id}
         />
       </div>
       {/* </div> */}

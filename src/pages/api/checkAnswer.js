@@ -33,9 +33,11 @@ export default async function handler(req, res) {
         _id: req.body.questionId,
       });
       const answer = req.body.answer.toUpperCase();
-      const accessToken = req.headers.authorization;
+      console.log(req.body);
+      const accessToken = req.headers.authorization.split(" ")[1];
+      console.log(accessToken);
       const response = await axios.get(
-        process.env.PROFILE_BACKEND_URL + "/profile/view",
+        process.env.NEXT_PUBLIC_PROFILE_BACKEND_URL + "/profile/view",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -103,13 +105,21 @@ export default async function handler(req, res) {
           answer: aldreadyAnswered,
         });
       } else {
-        const dictionary = await axios.get(
-          `${process.env.DICTIONARY_API_URL}/${answer}`
-        );
-        if (dictionary.status === 404) {
-          res.status(500).json({ message: "Answer is not a word" });
-          return;
+        try {
+          const dictionary = await axios.get(
+            `${process.env.DICTIONARY_API_URL}/${answer}`
+          );
+          if (dictionary.status === 404) {
+            res.status(500).json({ message: "Answer is not a word" });
+            return;
+          }
+        } catch (err) {
+          if (err.response.status === 404) {
+            res.status(404).json({ message: "Answer is not a word" });
+            return;
+          }
         }
+
         question.answers.push({
           answer: answer,
           name: name,

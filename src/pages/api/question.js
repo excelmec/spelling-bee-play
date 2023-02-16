@@ -1,13 +1,15 @@
 import connectDB from "../../utils/connectDB";
 import questionModel from "../../models/questionModel";
 
-
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       await connectDB();
-      const questions = await questionModel.find({});
-      res.status(200).json(questions);
+      console.log("questionModel", questionModel);
+      const question = await questionModel
+        .findOne({})
+        .sort({ releaseTime: -1 });
+      res.status(200).json(question);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
