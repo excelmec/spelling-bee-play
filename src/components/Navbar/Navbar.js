@@ -151,7 +151,7 @@ function Navbar() {
             >
               <MenuItem
                 onClick={() => {
-                  onLogoutClick;
+                  onLogoutClick();
                 }}
                 className={styles.button}
               >

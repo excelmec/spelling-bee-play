@@ -8,6 +8,7 @@ import axios from "axios";
 import AuthHandler from "../auth/authHandler";
 import { UserContext } from "../contexts/UserContext";
 import { Loader } from "../components";
+import { toast } from "react-hot-toast";
 
 function Home() {
   const router = useRouter();
@@ -33,6 +34,7 @@ function Home() {
               } else {
                 if (profile) {
                   if (isPlayerRegistered === true) {
+                    toast.success("Successfully Logged In");
                     router.push("/spellbee");
                     return;
                   } else
@@ -44,7 +46,7 @@ function Home() {
                       })
                       .then((res) => {
                         if (res.data.status == "success") {
-                          console.log("success");
+                          toast.success("Registered Successfully");
                         }
                       });
                 }
