@@ -49,7 +49,7 @@ export default function Buttons({
         onClick={() => {
           setOpen(true);
         }}
-        className="enter-btn buttons"
+        className="enter-btn buttons_1"
       >
         View Words Entered
       </button>

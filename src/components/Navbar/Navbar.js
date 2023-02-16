@@ -9,8 +9,10 @@ import AnswerDialog from "../AnswersDialog/AnswerDialog";
 import RulesDialog from "../RulesDialog/RulesDialog";
 import HowToPlayDialog from "../HowToPlayDialog/HowToPlayDialog";
 
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+
 import { useRouter } from "next/router";
-import { Avatar } from "@mui/material";
+import { Avatar, Drawer } from "@mui/material";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 
 function Navbar() {
@@ -20,6 +22,7 @@ function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -27,6 +30,14 @@ function Navbar() {
 
   const handleClose1 = () => {
     setOpen1(false);
+  };
+
+  const handleDrawerOpen = () => {
+    setOpen3(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen3(false);
   };
 
   const handleClose2 = () => {
@@ -48,21 +59,9 @@ function Navbar() {
       <HowToPlayDialog open={open2} handleClose={handleClose2} />
       <div className={styles.navbar_container}>
         <Image src={excelLogo} alt="Excel Logo" width={150} height={150} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "2rem",
-          }}
-        >
+        <div className={styles.navbar__desktop}>
           <div
-            style={{
-              color: "white",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className={styles.navbar__item}
             onClick={() => {
               router.push("/");
             }}
@@ -70,12 +69,7 @@ function Navbar() {
             Home
           </div>
           <div
-            style={{
-              color: "white",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className={styles.navbar__item}
             onClick={() => {
               router.push("/spellbee");
             }}
@@ -83,12 +77,7 @@ function Navbar() {
             Game
           </div>
           <div
-            style={{
-              color: "white",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className={styles.navbar__item}
             onClick={() => {
               setOpen2(true);
             }}
@@ -96,12 +85,7 @@ function Navbar() {
             How to Play
           </div>
           <div
-            style={{
-              color: "white",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className={styles.navbar__item}
             onClick={() => {
               setOpen1(true);
             }}
@@ -109,12 +93,7 @@ function Navbar() {
             Rules
           </div>
           <div
-            style={{
-              color: "white",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className={styles.navbar__item}
             onClick={() => {
               router.push("/leaderboard");
             }}
@@ -122,12 +101,7 @@ function Navbar() {
             Leaderboard
           </div>
           <div
-            style={{
-              color: "white",
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className={styles.navbar__item}
             onClick={() => {
               setOpen(true);
             }}
@@ -169,6 +143,121 @@ function Navbar() {
             </div>
           )}
         </div>
+        <div className={styles.nav__mob}>
+          <div className={styles.nav__mob_container}>
+            <button className={styles.nav_btn} onClick={handleDrawerOpen}>
+              <HiOutlineMenuAlt3 className={styles.hamburger} />
+            </button>
+          </div>
+        </div>
+        <Drawer
+          open={open3}
+          onClick={handleDrawerClose}
+          onClose={(event, reason) => {
+            if (reason !== "backdropClick") {
+              handleDrawerClose();
+            } else if (reason !== "escapeKeyDown") {
+              handleDrawerClose();
+            }
+          }}
+          anchor="left"
+        >
+          <div className={styles.nav__drawer}>
+            <div className={styles.nav__drawer_header}>
+              <Image
+                src={excelLogo}
+                alt="Excel Logo"
+                width={150}
+                height={150}
+              />
+              <div className={styles.navbar_items_mob}>
+                <div
+                  onClick={() => {
+                    router.push("/");
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  Home
+                </div>
+                <div
+                  onClick={() => {
+                    router.push("/spellbee");
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  Game
+                </div>
+                <div
+                  onClick={() => {
+                    setOpen2(true);
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  How to Play
+                </div>
+                <div
+                  onClick={() => {
+                    setOpen1(true);
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  Rules
+                </div>
+                <div
+                  onClick={() => {
+                    router.push("/scoreboard");
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  Leaderboard
+                </div>
+                <div
+                  onClick={() => {
+                    setOpen(true);
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  Answers
+                </div>
+                {profile != null ? (
+                  <>
+                    <Avatar
+                      src={profile.picture}
+                      sx={{
+                        width: "3rem",
+                        height: "3rem",
+                      }}
+                    />
+                    <div className={styles.name}>{profile.name}</div>
+                    <button
+                      onClick={() => {
+                        onLogoutClick();
+                      }}
+                      className={styles.button}
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <div
+                    className={styles.button}
+                    onClick={() => {
+                      onLoginClick();
+                    }}
+                  >
+                    Login
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </Drawer>
       </div>
     </>
   );
