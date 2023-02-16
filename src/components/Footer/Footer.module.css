@@ -10,3 +10,8 @@
   font-weight: 600;
   color: #1cf9c9;
 }
+@media (max-width: 768px) {
+  .footer_text {
+    font-size: 1.2rem;
+  }
+}
