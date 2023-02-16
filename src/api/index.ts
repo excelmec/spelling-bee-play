@@ -7,6 +7,7 @@ export const api = axios.create({
 });
 
 export const postAnswer = async (qnId, answer) => {
+  if (answer.length < 3) return toast.error("Answer must be at least 3 characters");
   try {
     const response = await api.post(
       "/checkAnswer",
