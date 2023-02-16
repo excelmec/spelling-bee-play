@@ -1,5 +1,6 @@
-import questionModel from "@/models/questionModel";
-import connectDB from "@/utils/connectDB";
+import connectDB from "../../utils/connectDB";
+import questionModel from "../../models/questionModel";
+
 
 export default async function handler(req, res) {
   if (req.method === "GET") {

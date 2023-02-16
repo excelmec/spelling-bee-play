@@ -3,6 +3,7 @@ import Head from "next/head";
 import Buttons from "../components/Game/buttons";
 import Letters from "../components/Game/letters";
 import WordList from "../components/Game/wordList";
+import AnswerDialog from "../components/AnswersDialog/AnswerDialog";
 import useSwr from "swr";
 import { Footer, Loader, Navbar } from "../components";
 import MainLayout from "../components/MainLayout/MainLayout";
@@ -249,6 +250,7 @@ export default function spellbee() {
 
   return (
     <MainLayout>
+      <AnswerDialog/>
       <div
         className="game"
         style={{

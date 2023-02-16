@@ -2,21 +2,20 @@ import userModel from "../../models/userModel";
 import connectDB from "../../utils/connectDB";
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     try {
       await connectDB();
-      const users = await userModel
-        .find(
-          {},
-          {
-            name: 1,
-            score: 1,
-            picture: 1,
-            _id: 0,
-          }
-        )
-        .sort({ score: -1 });
-      res.status(200).json(users);
+      const user = await userModel.findOne(
+        {
+          email: req.body.email,
+        },
+        {
+          name: 1,
+          email: 1,
+          _id: 0,
+        }
+      );
+      res.status(200).json(user);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

@@ -1,26 +1,28 @@
-import userModel from "@/models/userModel";
-import connectDB from "@/utils/connectDB";
+
 import axios from "axios";
+import userModel from "../../models/userModel";
+import connectDB from "../../utils/connectDB";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       await connectDB();
       await axios
-        .get(process.env.PROFILE_BACKEND_URL + "/profile/view", {
+        .get(process.env.NEXT_PUBLIC_PROFILE_BACKEND_URL + "/profile/view", {
           headers: {
-            Authorization: req.headers.authorization,
+            Authorization: req.body.headers.Authorization,
           },
         })
-        .then((response) => {
+        .then(async(response) => {
           const data = response.data;
-          const user = new userModel({
+          const user = await new userModel({
             name: data.name,
             email: data.email,
+            picture: data.picture,
             excelId: data.id,
             score: 0,
           });
-          user.save();
+          await user.save();
         });
       res.status(200).json({ message: "User created" });
     } catch (err) {

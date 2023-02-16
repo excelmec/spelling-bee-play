@@ -7,7 +7,7 @@ export const UserContext = createContext();
 
 function UserDetails(props) {
   const [profile, setProfile] = React.useState();
-
+  const [isPlayerRegistered, setIsPlayerRegistered] = React.useState(false);
   const getProfile = async (access_token) => {
     await axios
       .get(`${process.env.NEXT_PUBLIC_PROFILE_BACKEND_URL}/Profile`, {
@@ -19,6 +19,23 @@ function UserDetails(props) {
         setProfile(response.data);
       });
   };
+
+  const checkRegistration = async () => {
+    if (!profile) return;
+    await axios
+      .post(`/api/checkRegistration`, {
+        email: profile.email,
+      })
+      .then((response) => {
+        if (response.data) {
+          setIsPlayerRegistered(true);
+        }
+      });
+  };
+
+  useEffect(() => {
+    checkRegistration();
+  }, [profile]);
 
   useEffect(() => {
     if (localStorage.getItem("refreshToken")) {
@@ -52,6 +69,8 @@ function UserDetails(props) {
     <UserContext.Provider
       value={{
         profile,
+        isPlayerRegistered,
+        setIsPlayerRegistered,
         setProfile,
         getProfile,
       }}

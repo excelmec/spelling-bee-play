@@ -9,6 +9,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  picture: {
+    type: String,
+    required: true,
+  },
   excelId: {
     type: Number,
     required: true,

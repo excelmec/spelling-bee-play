@@ -8,11 +8,11 @@ export default function leaderboard() {
       <div
         className="leaderboard"
         style={{
-          minHeight: "100vh",
+          minHeight: "90vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          paddingTop: "5rem",
+          justifyContent: "flex-start",
+          paddingTop: "6rem",
         }}
       >
         <Leaderboard />
