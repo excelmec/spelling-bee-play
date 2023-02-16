@@ -15,6 +15,7 @@ import Hints from "../components/Game/hints";
 import AnswerList from "../components/Game/answerList";
 import Realistic from "../components/Game/realistic";
 import { useRouter } from "next/router";
+import CustomTitle from "../utils/customTitle";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -257,6 +258,7 @@ export default function SpellBee() {
 
   return (
     <MainLayout>
+      <CustomTitle title="Game" />
       <AnswerDialog />
       <div
         className="game"

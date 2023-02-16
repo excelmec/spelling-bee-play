@@ -1,4 +1,4 @@
-import userAnswerModel from "@/models/userAnswerModel";
+import userAnswerModel from "../../models/userAnswerModel";
 import axios from "axios";
 
 export default async function handler(req, res) {

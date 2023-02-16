@@ -1,7 +1,7 @@
-import questionModel from "@/models/questionModel";
-import userAnswerModel from "@/models/userAnswerModel";
-import userModel from "@/models/userModel";
-import connectDB from "@/utils/connectDB";
+import questionModel from "../../models/questionModel";
+import userAnswerModel from "../../models/userAnswerModel";
+import userModel from "../../models/userModel";
+import connectDB from "../../utils/connectDB";
 import axios from "axios";
 
 export default async function handler(req, res) {
