@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
-import { answerSum } from '../../pages/index'
+import { answerSum } from '../../pages/spellbee'
 
 export const rankingLevels = [
   {
