@@ -36,7 +36,7 @@ export default function Header({ data, showRankings, showHowTo, showHints }) {
         >
           <GiHamburgerMenu />
         </button>
-        {showMenu && (
+        {/* {showMenu && (
           <div className='menu'>
             {menuItems.map((i) => (
               <button
@@ -51,7 +51,7 @@ export default function Header({ data, showRankings, showHowTo, showHints }) {
               </button>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { CustomTitle } from "../utils";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import MainLayout from "../components/MainLayout/MainLayout";
 
 function Home() {
   const [profile, setProfile] = useState(null);
@@ -35,9 +36,10 @@ function Home() {
   return (
     <>
       <CustomTitle title="Home" />
-      <div className={styles.home_container}>
-        <Navbar profile={profile} />
-        <div className={styles.home_container_main}>
+      <MainLayout>
+        <div className={styles.home_container_main} style={{
+          minHeight:"90vh"
+        }}>
           <div className={styles.heading}>Spell Bee</div>
           <div
             className={styles.button}
@@ -52,8 +54,7 @@ function Home() {
             Play Now
           </div>
         </div>
-        <Footer />
-      </div>
+      </MainLayout>
     </>
   );
 }

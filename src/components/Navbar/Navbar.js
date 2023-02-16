@@ -1,10 +1,12 @@
 import { excelLogo } from "../../assets";
 import AccountHandler from "../../auth/accountHandler";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Navbar.module.css";
+import { UserContext } from "../../contexts/UserContext";
 
-function Navbar({ profile }) {
+function Navbar() {
+  const {profile}=useContext(UserContext);
   const onLoginClick = () => {
     if (!AccountHandler.isUserLoggedIn()) {
       AccountHandler.logInUser();
@@ -15,7 +17,7 @@ function Navbar({ profile }) {
   };
   return (
     <div className={styles.navbar_container}>
-      <Image src={excelLogo} alt="Excel Logo" width={200} height={100} />
+      <Image src={excelLogo} alt="Excel Logo" width={150} height={150} />
       {profile != null ? (
         <div className={styles.login_details}>
           <div className={styles.name}>{profile.name}</div>

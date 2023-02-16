@@ -3,12 +3,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   width: 100%;
+  position: fixed;
+  background-color: #02121c;
 }
 .button {
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 0.5rem;
@@ -19,17 +21,15 @@
 .button:hover {
   background-color: #119eb1;
 }
-.name
-{
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1cf9c9;
+.name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1cf9c9;
 }
-.login_details
-{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 2rem;
-    flex-wrap: wrap;
+.login_details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 2rem;
+  flex-wrap: wrap;
 }

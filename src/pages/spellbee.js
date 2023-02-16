@@ -4,6 +4,8 @@ import Buttons from "../components/Game/buttons";
 import Letters from "../components/Game/letters";
 import WordList from "../components/Game/wordList";
 import useSwr from "swr";
+import { Footer, Loader, Navbar } from "../components";
+import MainLayout from "../components/MainLayout/MainLayout";
 import Header from "../components/Game/header";
 import Rankings from "../components/Game/rankings";
 import { rankingLevels } from "../components/Game/rankings";
@@ -137,7 +139,7 @@ export default function spellbee() {
   }, [foundWords]);
 
   if (!data) {
-    return <Loading />;
+    return <Loader />;
   }
   if (error) console.log(error);
 
@@ -246,12 +248,19 @@ export default function spellbee() {
   }
 
   return (
-    <div className="game">
-      <Head>
-        <title>Spelling Bee</title>
-      </Head>
-      {showHowTo && <HowTo showHowTo={() => setShowHowTo(!showHowTo)} />}
-      {showRanking && (
+    <MainLayout>
+      <div
+        className="game"
+        style={{
+          minHeight: "90vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {/* {showHowTo && <HowTo showHowTo={() => setShowHowTo(!showHowTo)} />} */}
+        {/* {showRanking && (
         <Rankings
           data={data}
           showRankingsToggle={() => setShowRanking(!showRanking)}
@@ -265,18 +274,17 @@ export default function spellbee() {
           answers={data && data.gameData.yesterday.answers}
           foundWords={foundWords}
         />
-      )}
+      )} */}
 
-      <Header
+        {/* <Header
         data={data}
         showRankings={() => setShowRanking(!showRanking)}
         showHowTo={() => setShowHowTo(!showHowTo)}
         showHints={() => setShowHints(!showHints)}
-      />
-      <div className="flex flex-row w-full"></div>
-      <Realistic message={message} />
-      <div className="ranking-game-div">
-        <div className="ranking-wordlist">
+      /> */}
+        {/* <Realistic message={message} /> */}
+        {/* <div className="ranking-game-div"> */}
+          {/* <div className="ranking-wordlist">
           <UserRanking currentPoints={currentPoints} rankIndex={rankIndex} />
           {revealAnswers ? (
             <AnswerList
@@ -286,60 +294,59 @@ export default function spellbee() {
           ) : (
             <WordList words={foundWords} />
           )}
-        </div>
-        <div className="game-div">
-          <div className="w-full fixed flex flex-row items-center justify-center">
-            {message && <p className="message">{message}</p>}
-            {pointsAdded && (
-              <p className="points-added rounded-full animate-ping bg-white">
-                {pointsAdded}
-              </p>
+        </div> */}
+            <div className="w-full fixed flex flex-row items-center justify-center">
+              {message && <p className="message">{message}</p>}
+              {pointsAdded && (
+                <p className="points-added rounded-full animate-ping bg-white">
+                  {pointsAdded}
+                </p>
+              )}
+            </div>
+            {userWord.length < 1 ? (
+              <h2 className="input self-center text-gray-300">
+                <span className="cursor">|</span>Type or Click
+              </h2>
+            ) : (
+              <h2 className="input self-center">
+                {userWord.split("").map((i) => (
+                  <span
+                    key={i}
+                    className={
+                      i === data.gameData.yesterday.centerLetter.toUpperCase()
+                        ? "text-yellow-500"
+                        : data.gameData.yesterday.outerLetters.includes(
+                            i.toLowerCase()
+                          )
+                        ? "text-gray-100"
+                        : "text-gray-300"
+                    }
+                  >
+                    {i}
+                  </span>
+                ))}
+                <span className="cursor">|</span>
+              </h2>
             )}
-          </div>
-          {userWord.length < 1 ? (
-            <h2 className="input self-center text-gray-300">
-              <span className="cursor">|</span>Type or click
-            </h2>
-          ) : (
-            <h2 className="input self-center">
-              {userWord.split("").map((i) => (
-                <span
-                  key={i}
-                  className={
-                    i === data.gameData.yesterday.centerLetter.toUpperCase()
-                      ? "text-yellow-500"
-                      : data.gameData.yesterday.outerLetters.includes(
-                          i.toLowerCase()
-                        )
-                      ? "text-black"
-                      : "text-gray-300"
-                  }
-                >
-                  {i}
-                </span>
-              ))}
-              <span className="cursor">|</span>
-            </h2>
-          )}
-          <Letters
-            data={data && data.gameData.yesterday}
-            shuffledLetters={
-              shuffledLetters === null
-                ? data.gameData.yesterday.outerLetters.map((i) =>
-                    i.toUpperCase()
-                  )
-                : shuffledLetters.map((i) => i.toUpperCase())
-            }
-            setLetter={(e) => setUserWord(userWord.concat(e))}
-          />
-          <Buttons
-            revealedAnswers={revealAnswers}
-            shuffle={() => shuffle()}
-            clearWord={() => clearWord()}
-            searchWord={() => searchWord()}
-          />
+            <Letters
+              data={data && data.gameData.yesterday}
+              shuffledLetters={
+                shuffledLetters === null
+                  ? data.gameData.yesterday.outerLetters.map((i) =>
+                      i.toUpperCase()
+                    )
+                  : shuffledLetters.map((i) => i.toUpperCase())
+              }
+              setLetter={(e) => setUserWord(userWord.concat(e))}
+            />
+            <Buttons
+              revealedAnswers={revealAnswers}
+              shuffle={() => shuffle()}
+              clearWord={() => clearWord()}
+              searchWord={() => searchWord()}
+            />
         </div>
-      </div>
-    </div>
+      {/* </div> */}
+    </MainLayout>
   );
 }
