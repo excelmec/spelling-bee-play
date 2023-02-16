@@ -9,10 +9,12 @@ import AuthHandler from "../auth/authHandler";
 import { UserContext } from "../contexts/UserContext";
 import { Loader } from "../components";
 import { toast } from "react-hot-toast";
+import { CircleLoader } from "react-spinners";
 
 function Home() {
   const router = useRouter();
   const { isPlayerRegistered, profile } = useContext(UserContext);
+  const [loading, setLoading] = React.useState(false);
 
   return (
     <>
@@ -32,12 +34,14 @@ function Home() {
                 alert("Please login to play the game");
                 return;
               } else {
+                setLoading(true);
                 if (profile) {
                   if (isPlayerRegistered === true) {
+                    setLoading(false);
                     toast.success("Successfully Logged In");
                     router.push("/spellbee");
                     return;
-                  } else
+                  } else {
                     await axios
                       .post("/api/register", {
                         headers: {
@@ -49,13 +53,14 @@ function Home() {
                           toast.success("Registered Successfully");
                         }
                       });
+                  }
                 }
 
                 router.push("/spellbee");
               }
             }}
           >
-            Play Now
+            {loading ? <CircleLoader /> : "Play Now"}
           </div>
         </div>
       </MainLayout>
