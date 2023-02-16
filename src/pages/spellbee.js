@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import Head from "next/head";
+import { useState, useEffect } from "react";
 import Buttons from "../components/Game/buttons";
 import Letters from "../components/Game/letters";
 import WordList from "../components/Game/wordList";
@@ -7,7 +6,6 @@ import AnswerDialog from "../components/AnswersDialog/AnswerDialog";
 import useSwr from "swr";
 import { Footer, Loader, Navbar } from "../components";
 import MainLayout from "../components/MainLayout/MainLayout";
-import Header from "../components/Game/header";
 import Rankings from "../components/Game/rankings";
 import { rankingLevels } from "../components/Game/rankings";
 import UserRanking from "../components/Game/userRanking";
@@ -16,9 +14,7 @@ import Loading from "../components/Game/loading";
 import Hints from "../components/Game/hints";
 import AnswerList from "../components/Game/answerList";
 import Realistic from "../components/Game/realistic";
-import { UserContext } from "../contexts/UserContext";
 import { useRouter } from "next/router";
-import AuthHandler from "../auth/authHandler";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -50,7 +46,6 @@ export const answerSum = (wordList, pangramCount) => {
 
 export default function SpellBee() {
   const { data, error } = useSwr("/api/bee", fetcher);
-  const { profile } = useContext(UserContext);
   const router = useRouter();
   const [userWord, setUserWord] = useState("");
   const [foundWords, setFoundWords] = useState([]);
