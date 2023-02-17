@@ -1,6 +1,8 @@
 import axios from "axios";
 import AuthHandler from "../auth/authHandler";
 import { toast } from "react-hot-toast";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 export const api = axios.create({
   baseURL: "/api",
@@ -11,7 +13,9 @@ export const postAnswer = async (
   answer,
   mainLetter,
   setUserWord,
-  setLoading
+  refresh,
+  setLoading,
+  setRefresh
 ) => {
   if (answer.length < 4) {
     setLoading(false);
@@ -44,8 +48,12 @@ export const postAnswer = async (
       }
     );
     toast.success(response.data.message);
+
     setUserWord("");
     setLoading(false);
+    if (response.status === 200) {
+      setRefresh(!refresh);
+    }
     return response.data;
   } catch (error) {
     toast.error(error.response.data.message);

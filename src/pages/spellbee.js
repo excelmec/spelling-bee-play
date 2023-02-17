@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Buttons from "../components/Game/buttons";
 import Letters from "../components/Game/letters";
 import WordList from "../components/Game/wordList";
@@ -16,6 +16,7 @@ import AnswerList from "../components/Game/answerList";
 import Realistic from "../components/Game/realistic";
 import { useRouter } from "next/router";
 import CustomTitle from "../utils/customTitle";
+import { UserContext } from "../contexts/UserContext";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -47,7 +48,7 @@ export const answerSum = (wordList, pangramCount) => {
 
 export default function SpellBee() {
   const { data, error } = useSwr("/api/question", fetcher);
-  console.log(data);
+  //console.log(data);
   const router = useRouter();
   const [userWord, setUserWord] = useState("");
   const [foundWords, setFoundWords] = useState([]);
@@ -61,6 +62,8 @@ export default function SpellBee() {
   const [rankIndex, setRankIndex] = useState(0);
   const [currentPoints, setCurrentPoints] = useState(0);
   const [revealAnswers, setRevealAnswers] = useState(false);
+
+  const { score } = useContext(UserContext);
 
   useEffect(() => {
     if (localStorage.getItem("refreshToken") == null) {
@@ -247,13 +250,31 @@ export default function SpellBee() {
             <WordList words={foundWords} />
           )}
         </div> */}
-        <div className="fixed flex flex-row items-center justify-center w-full ">
+        {/* <div className="fixed flex flex-row items-center justify-center w-full ">
           {message && <p className="message">{message}</p>}
           {pointsAdded && (
             <p className="bg-white rounded-full points-added animate-ping">
               {pointsAdded}
             </p>
           )}
+        </div> */}
+        <div
+          style={{
+            paddingTop: "1rem",
+            paddingBottom: "2rem",
+            fontSize: "1.5rem",
+            fontWeight: "700",
+            color: "#fff",
+          }}
+        >
+          Today's Score :{" "}
+          <span
+            style={{
+              color: "#1cf9c9",
+            }}
+          >
+            {score}
+          </span>
         </div>
         {userWord.length < 1 ? (
           <h2 className="self-center text-gray-300 input ">

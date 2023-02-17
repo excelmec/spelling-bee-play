@@ -7,6 +7,10 @@ export const UserContext = createContext();
 
 function UserDetails(props) {
   const [profile, setProfile] = React.useState();
+  const [refresh,setRefresh] = React.useState(false);
+  const [yesterdayQuestion, setYesterdayQuestion] = React.useState();
+  const [score, setScore] = React.useState(0);
+  const [answers, setAnswers] = React.useState([]);
   const [isPlayerRegistered, setIsPlayerRegistered] = React.useState(false);
   const getProfile = async (access_token) => {
     await axios
@@ -31,6 +35,12 @@ function UserDetails(props) {
           setIsPlayerRegistered(true);
         }
       });
+  };
+
+  const fetchYesterdayQuestion = async () => {
+    const response = await axios.get("/api/getYesterdayAnswers");
+    //console.log(response.data);
+    setYesterdayQuestion(response.data);
   };
 
   useEffect(() => {
@@ -65,11 +75,52 @@ function UserDetails(props) {
     // eslint-disable-next-line
   }, []);
 
+  const getTodaysUserAnswers = async () => {
+    const question = await axios.get("/api/question");
+    const questionId = question.data._id;
+    const refreshToken = localStorage.getItem("refreshToken");
+    AuthHandler.aysncGetAccessToken(refreshToken).then(async (access_token) => {
+      if (access_token) {
+        const response = await axios.post(
+          "/api/getTodayScoreAndAnswersByUser",
+          {
+            questionId: await questionId,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        setScore(response.data.totalScore);
+        let temp = [];
+        response.data.score.map((answer) => {
+          temp.push(answer.answer);
+        });
+        setAnswers(temp);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getTodaysUserAnswers();
+  }, [refresh]);
+
+  useEffect(() => {
+    fetchYesterdayQuestion();
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
         profile,
         isPlayerRegistered,
+        yesterdayQuestion,
+        score,
+        answers,
+        refresh,
+        setRefresh,
+        setYesterdayQuestion,
         setIsPlayerRegistered,
         setProfile,
         getProfile,

@@ -1,8 +1,10 @@
 import { Dialog, DialogContent } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import { answersData } from "../../data/answersData";
 
 function WordsEnteredDialog({ open, handleClose }) {
+  const { answers } = useContext(UserContext);
   return (
     <Dialog
       open={open}
@@ -48,7 +50,7 @@ function WordsEnteredDialog({ open, handleClose }) {
           gap: "1rem",
         }}
       >
-        {answersData.map((play, index) => {
+        {answers?.map((play, index) => {
           return (
             <p
               style={{

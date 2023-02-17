@@ -9,7 +9,7 @@ export default function Leaderboard() {
   const getLeaderboard = async () => {
     await axios.get(`/api/leaderboard`).then((response) => {
       setLeaderboard(response.data);
-      console.log(response.data);
+      //console.log(response.data);
       setLoading(false);
     });
   };
@@ -35,8 +35,8 @@ export default function Leaderboard() {
       }}
     >
       <h1 className="text-5xl font-bold">Leaderboard</h1>
-      <div className="flex flex-col gap-4 text-center w-96 mx-auto overflow-y-hidden">
-        <div className="flex flex-row justify-evenly text-xl">
+      <div className="flex flex-col gap-4 mx-auto overflow-y-hidden text-center w-96">
+        <div className="flex flex-row text-xl justify-evenly">
           <div
             style={{
               display: "flex",
@@ -69,7 +69,7 @@ export default function Leaderboard() {
 
 function LeaderboardEntry({ name, score, rank, picture }) {
   return (
-    <div className="flex flex-row justify-evenly items-center  shrink-1 grow-0 h-14 bg-gray-800 rounded-lg">
+    <div className="flex flex-row items-center bg-gray-800 rounded-lg justify-evenly shrink-1 grow-0 h-14">
       <div
         style={{
           display: "flex",

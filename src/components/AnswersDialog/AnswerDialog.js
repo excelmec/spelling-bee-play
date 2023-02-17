@@ -1,8 +1,22 @@
 import { Dialog, DialogContent } from "@mui/material";
-import React from "react";
-import { answersData } from "../../data/answersData";
+import React, { useContext, useEffect } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 function AnswerDialog({ open, handleClose }) {
+  const { yesterdayQuestion } = useContext(UserContext);
+  const [answersData, setAnswersData] = React.useState([]);
+  const getAnswers = () => {
+    let temp = [];
+    yesterdayQuestion?.answers?.map((answer) => {
+      temp.push(answer.answer);
+    });
+    setAnswersData(temp);
+  };
+
+  useEffect(() => {
+    getAnswers();
+  }, [yesterdayQuestion]);
+
   return (
     <Dialog
       open={open}
@@ -43,26 +57,60 @@ function AnswerDialog({ open, handleClose }) {
       <DialogContent
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           flexWrap: "wrap",
           gap: "1rem",
         }}
       >
-        {answersData.map((answer, index) => {
-          return (
-            <p
-              style={{
-                fontSize: "1.1rem",
-                color: "#1cf9c9",
-              }}
-              key={index}
-            >
-              {index + 1}
-              {" . "}
-              {answer}
-            </p>
-          );
-        })}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+        <div
+          style={{
+            fontSize: "1.2rem",
+            fontWeight: "700",
+            color: "#2de1da",
+          }}
+        >
+          Letters : {yesterdayQuestion?.letters.join(" , ")}
+        </div>
+        <div
+          style={{
+            fontSize: "1.2rem",
+            fontWeight: "700",
+            color: "#2de1da",
+          }}
+        >
+          Main Letter : {yesterdayQuestion?.mainLetter}
+        </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}
+        >
+          {answersData.map((answer, index) => {
+            return (
+              <p
+                style={{
+                  fontSize: "1.1rem",
+                  color: "#1cf9c9",
+                }}
+                key={index}
+              >
+                {index + 1}
+                {" . "}
+                {answer}
+              </p>
+            );
+          })}
+        </div>
       </DialogContent>
     </Dialog>
   );
