@@ -278,7 +278,7 @@ export default function SpellBee() {
         </div>
         {userWord.length < 1 ? (
           <h2 className="self-center text-gray-300 input ">
-            <span className="cursor">|</span>Type or Click
+            <span className="cursor">|</span>Click the Letters
           </h2>
         ) : (
           <h2 className="self-center input ">

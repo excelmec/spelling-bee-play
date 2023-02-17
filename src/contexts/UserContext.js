@@ -7,7 +7,7 @@ export const UserContext = createContext();
 
 function UserDetails(props) {
   const [profile, setProfile] = React.useState();
-  const [refresh,setRefresh] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
   const [yesterdayQuestion, setYesterdayQuestion] = React.useState();
   const [score, setScore] = React.useState(0);
   const [answers, setAnswers] = React.useState([]);
@@ -81,23 +81,25 @@ function UserDetails(props) {
     const refreshToken = localStorage.getItem("refreshToken");
     AuthHandler.aysncGetAccessToken(refreshToken).then(async (access_token) => {
       if (access_token) {
-        const response = await axios.post(
-          "/api/getTodayScoreAndAnswersByUser",
-          {
-            questionId: await questionId,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${access_token}`,
+        try {
+          const response = await axios.post(
+            "/api/getTodayScoreAndAnswersByUser",
+            {
+              questionId: await questionId,
             },
-          }
-        );
-        setScore(response.data.totalScore);
-        let temp = [];
-        response.data.score.map((answer) => {
-          temp.push(answer.answer);
-        });
-        setAnswers(temp);
+            {
+              headers: {
+                authorization: `Bearer ${access_token}`,
+              },
+            }
+          );
+          setScore(response.data.totalScore);
+          let temp = [];
+          response.data.score.map((answer) => {
+            temp.push(answer.answer);
+          });
+          setAnswers(temp);
+        } catch (err) {}
       }
     });
   };
