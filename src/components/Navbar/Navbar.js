@@ -60,14 +60,14 @@ function Navbar() {
       <div className={styles.navbar_container}>
         <Image src={excelLogo} alt="Excel Logo" width={150} height={150} />
         <div className={styles.navbar__desktop}>
-          <div
+          {/* <div
             className={styles.navbar__item}
             onClick={() => {
               router.push("/");
             }}
           >
             Home
-          </div>
+          </div> */}
           <div
             className={styles.navbar__item}
             onClick={() => {
@@ -171,7 +171,7 @@ function Navbar() {
                 height={150}
               />
               <div className={styles.navbar_items_mob}>
-                <div
+                {/* <div
                   onClick={() => {
                     router.push("/");
                     handleDrawerClose();
@@ -179,7 +179,7 @@ function Navbar() {
                   className={styles.navbar__item}
                 >
                   Home
-                </div>
+                </div> */}
                 <div
                   onClick={() => {
                     router.push("/spellbee");
