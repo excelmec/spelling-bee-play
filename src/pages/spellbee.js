@@ -260,7 +260,7 @@ export default function SpellBee() {
             <span className="cursor">|</span>Type or Click
           </h2>
         ) : (
-          <h2 className="input self-center mt-4">
+          <h2 className="input self-center ">
             {userWord.split("").map((i) => (
               <span
                 key={i}
