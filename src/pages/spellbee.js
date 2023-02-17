@@ -204,25 +204,7 @@ export default function SpellBee() {
     <MainLayout>
       <CustomTitle title="Game" />
       <AnswerDialog />
-      <div
-        style={{
-          paddingTop: "1rem",
-          paddingBottom: "2rem",
-          fontSize: "1.5rem",
-          fontWeight: "700",
-          color: "#fff",
-          marginTop: "5rem",
-        }}
-      >
-        Today's Score :{" "}
-        <span
-          style={{
-            color: "#1cf9c9",
-          }}
-        >
-          {score}
-        </span>
-      </div>
+
       <div className="game flex flex-col md:flex-row justify-evenly items-center">
         {/* {showHowTo && <HowTo showHowTo={() => setShowHowTo(!showHowTo)} />} */}
         {/* {showRanking && (
@@ -268,15 +250,36 @@ export default function SpellBee() {
             </p>
           )}
         </div> */}
-        <Letters
-          data={data}
-          shuffledLetters={
-            shuffledLetters === null
-              ? data?.letters?.map((i) => i.toUpperCase())
-              : shuffledLetters.map((i) => i.toUpperCase())
-          }
-          setLetter={(e) => setUserWord(userWord.concat(e))}
-        />
+        <div className="flex flex-col items-center">
+          <div
+            style={{
+              paddingTop: "1rem",
+              paddingBottom: "2rem",
+              fontSize: "1.5rem",
+              fontWeight: "700",
+              color: "#fff",
+              marginTop: "5rem",
+            }}
+          >
+            Today's Score :{" "}
+            <span
+              style={{
+                color: "#1cf9c9",
+              }}
+            >
+              {score}
+            </span>
+          </div>
+          <Letters
+            data={data}
+            shuffledLetters={
+              shuffledLetters === null
+                ? data?.letters?.map((i) => i.toUpperCase())
+                : shuffledLetters.map((i) => i.toUpperCase())
+            }
+            setLetter={(e) => setUserWord(userWord.concat(e))}
+          />
+        </div>
         <div className="h-72 flex flex-col justify-evenly">
           {userWord.length < 1 ? (
             <h2 className="self-center text-gray-300 input ">
@@ -315,5 +318,5 @@ export default function SpellBee() {
       </div>
       {/* </div> */}
     </MainLayout>
-  );
+  )
 }
