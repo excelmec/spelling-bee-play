@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { FiRefreshCcw } from "react-icons/fi";
 import WordsEnteredDialog from "../WordsEnteredDialog/WordsEnteredDialog";
+import { postAnswer } from "../../api";
+
 
 export default function Buttons({
   searchWord,
   shuffle,
   clearWord,
   revealedAnswers,
+  qnid,
+  answer
 }) {
   const [open, setOpen] = useState(false);
 
@@ -38,9 +42,10 @@ export default function Buttons({
           <FiRefreshCcw />
         </button>
         <button
-          onClick={() => searchWord()}
+          onClick={() => postAnswer(qnid,answer)}
           className="enter-btn"
           disabled={revealedAnswers}
+          
         >
           Enter
         </button>
