@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       await connectDB();
-      console.log("questionModel", questionModel);
+      //console.log("questionModel", questionModel);
       const question = await questionModel
         .find({ active: true }, projection)
         .sort({ createdAt: -1 });

@@ -39,7 +39,7 @@ function UserDetails(props) {
 
   const fetchYesterdayQuestion = async () => {
     const response = await axios.get("/api/getYesterdayAnswers");
-    console.log(response.data);
+    //console.log(response.data);
     setYesterdayQuestion(response.data);
   };
 

@@ -48,7 +48,7 @@ export const answerSum = (wordList, pangramCount) => {
 
 export default function SpellBee() {
   const { data, error } = useSwr("/api/question", fetcher);
-  console.log(data);
+  //console.log(data);
   const router = useRouter();
   const [userWord, setUserWord] = useState("");
   const [foundWords, setFoundWords] = useState([]);

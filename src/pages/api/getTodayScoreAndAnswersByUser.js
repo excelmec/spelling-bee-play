@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     await connectDB();
     const questionId = req.body.questionId;
     const accessToken = req.headers.authorization.split(" ")[1];
-    console.log(accessToken);
+    //console.log(accessToken);
     const response = await axios.get(
       process.env.NEXT_PUBLIC_PROFILE_BACKEND_URL + "/profile/view",
       {
