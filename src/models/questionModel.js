@@ -13,8 +13,8 @@ const questionSchema = new Schema(
     answers: {
       type: Array,
     },
-    releaseTime: {
-      type: Date,
+    active: {
+      type: Boolean,
       required: true,
     },
   },
