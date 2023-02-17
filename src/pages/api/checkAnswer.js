@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       const aldreadyAnswered = question.answers.find(
         (a) => a.answer === answer
       );
-      const answerEntered = aldreadyAnswered.name;
+      const answerEntered = aldreadyAnswered?.name;
       if (aldreadyAnswered) {
         if (
           await userAnswerModel.findOne({

@@ -17,6 +17,8 @@ import Realistic from "../components/Game/realistic";
 import { useRouter } from "next/router";
 import CustomTitle from "../utils/customTitle";
 import { UserContext } from "../contexts/UserContext";
+import Protected from "../components/protectedRoute";
+
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -201,6 +203,7 @@ export default function SpellBee() {
   // }
 
   return (
+    <Protected>
     <MainLayout>
       <CustomTitle title="Game" />
       <AnswerDialog />
@@ -318,5 +321,6 @@ export default function SpellBee() {
       </div>
       {/* </div> */}
     </MainLayout>
+    </Protected>
   )
 }

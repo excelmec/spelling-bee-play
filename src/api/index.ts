@@ -17,10 +17,10 @@ export const postAnswer = async (
   setLoading,
   setRefresh
 ) => {
-  if (answer.length < 4) {
+  if (answer.length < 3) {
     setLoading(false);
     setUserWord("");
-    return toast.error("Answer must be at least 4 characters");
+    return toast.error("Answer must be at least 3 characters");
   }
   let temp = false;
   for (let i = 0; i < answer.length; i++) {
@@ -56,6 +56,7 @@ export const postAnswer = async (
     }
     return response.data;
   } catch (error) {
+    console.log(error)
     toast.error(error.response.data.message);
     setUserWord("");
     setLoading(false);
