@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import UserDetails from "../contexts/UserContext";
 import { Toaster } from "react-hot-toast";
+import Script from "next/script";
 
 export default function App({ Component, pageProps }) {
   return (
