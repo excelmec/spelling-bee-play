@@ -51,17 +51,9 @@ export default function Buttons({
     );
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="h-full flex flex-col items-center justify-center gap-4">
       <WordsEnteredDialog open={open} handleClose={handleClose} />
-      <div
-        className="items-center buttons "
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1rem",
-        }}
-      >
+      <div className="flex flex-row justify-center items-center gap-4">
         <button onClick={() => clearWord()} className="delete-btn">
           Delete
         </button>
@@ -97,7 +89,7 @@ export default function Buttons({
         onClick={() => {
           setOpen(true);
         }}
-        className="enter-btn buttons_1"
+        className="enter-btn"
       >
         View Words Entered
       </button>
