@@ -21,6 +21,7 @@ export default function Leaderboard() {
   if (loading) {
     return <Loader />;
   }
+
   return (
     <div
       className="text-white"
@@ -33,7 +34,7 @@ export default function Leaderboard() {
         paddingBottom: "3rem",
       }}
     >
-      <h1 className="text-5xl font-bold ">Leaderboard</h1>
+      <h1 className="text-5xl font-bold">Leaderboard</h1>
       <div className="flex flex-col gap-4 text-center w-96 mx-auto overflow-y-hidden">
         <div className="flex flex-row justify-evenly text-xl">
           <div
@@ -42,16 +43,10 @@ export default function Leaderboard() {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              gap: "2rem",
             }}
           >
             <div>Rank</div>
-            <div
-              style={{
-                width: 8,
-                height: 8,
-              }}
-            ></div>
+            <div style={{ width: 8, height: 8 }}></div>
           </div>
           <p>Name</p>
           <p>Score</p>
@@ -72,9 +67,9 @@ export default function Leaderboard() {
   );
 }
 
-function LeaderboardEntry({ name, score, rank ,picture}) {
+function LeaderboardEntry({ name, score, rank, picture }) {
   return (
-    <div className="flex flex-row justify-evenly items-center h-14 bg-gray-800 rounded-lg">
+    <div className="flex flex-row justify-evenly items-center  shrink-1 grow-0 h-14 bg-gray-800 rounded-lg">
       <div
         style={{
           display: "flex",
@@ -84,34 +79,11 @@ function LeaderboardEntry({ name, score, rank ,picture}) {
           gap: "2rem",
         }}
       >
-        <div
-          style={{
-            fontSize: "1.1rem",
-          }}
-        >
-          {rank}
-        </div>
-        <img
-          src={picture}
-          alt="profile"
-          className="w-8 h-8 rounded-full"
-        />
+        <div style={{ fontSize: "1.1rem" }}>{rank}</div>
+        <img src={picture} alt="profile" className="w-8 h-8 rounded-full" />
       </div>
-
-      <p
-        style={{
-          fontSize: "1.1rem",
-        }}
-      >
-        {name}
-      </p>
-      <p
-        style={{
-          fontSize: "1.1rem",
-        }}
-      >
-        {score}
-      </p>
+      <p style={{ fontSize: "1.1rem" }} className="w-48">{name}</p>
+      <p style={{ fontSize: "1.1rem" }}>{score}</p>
     </div>
   );
 }
