@@ -6,8 +6,30 @@ export const api = axios.create({
   baseURL: "/api",
 });
 
-export const postAnswer = async (qnId, answer) => {
-  if (answer.length < 3) return toast.error("Answer must be at least 3 characters");
+export const postAnswer = async (
+  qnId,
+  answer,
+  mainLetter,
+  setUserWord,
+  setLoading
+) => {
+  if (answer.length < 4) {
+    setLoading(false);
+    setUserWord("");
+    return toast.error("Answer must be at least 4 characters");
+  }
+  let temp = false;
+  for (let i = 0; i < answer.length; i++) {
+    if (answer[i] === mainLetter) {
+      temp = true;
+      break;
+    }
+  }
+  if (!temp) {
+    setLoading(false);
+    setUserWord("");
+    return toast.error("Answer must contain the main letter");
+  }
   try {
     const response = await api.post(
       "/checkAnswer",
@@ -22,9 +44,13 @@ export const postAnswer = async (qnId, answer) => {
       }
     );
     toast.success(response.data.message);
+    setUserWord("");
+    setLoading(false);
     return response.data;
   } catch (error) {
     toast.error(error.response.data.message);
+    setUserWord("");
+    setLoading(false);
   }
 };
 

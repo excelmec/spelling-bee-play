@@ -110,12 +110,12 @@ export default async function handler(req, res) {
             `${process.env.DICTIONARY_API_URL}/${answer}`
           );
           if (dictionary.status === 404) {
-            res.status(500).json({ message: "Answer is not a word" });
+            res.status(500).json({ message: "Answer is not a valid word." });
             return;
           }
         } catch (err) {
           if (err.response.status === 404) {
-            res.status(404).json({ message: "Answer is not a word" });
+            res.status(404).json({ message: "Answer is not a valid word." });
             return;
           }
         }

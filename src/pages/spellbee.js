@@ -288,10 +288,12 @@ export default function SpellBee() {
           setLetter={(e) => setUserWord(userWord.concat(e))}
         />
         <Buttons
+          mainLetter={data?.mainLetter}
           revealedAnswers={revealAnswers}
           shuffle={() => shuffle()}
           clearWord={() => clearWord()}
           searchWord={() => searchWord()}
+          setUserWord={setUserWord}
           answer={userWord}
           qnid={data?._id}
         />

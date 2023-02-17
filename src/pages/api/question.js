@@ -2,14 +2,18 @@ import connectDB from "../../utils/connectDB";
 import questionModel from "../../models/questionModel";
 
 export default async function handler(req, res) {
+  const projection = {
+    answers: 0,
+    active: 0,
+  };
   if (req.method === "GET") {
     try {
       await connectDB();
       console.log("questionModel", questionModel);
       const question = await questionModel
-        .findOne({})
-        .sort({ releaseTime: -1 });
-      res.status(200).json(question);
+        .find({ active: true }, projection)
+        .sort({ createdAt: -1 });
+      res.status(200).json(question[0]);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
