@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiRefreshCcw } from "react-icons/fi";
 import WordsEnteredDialog from "../WordsEnteredDialog/WordsEnteredDialog";
 import { postAnswer } from "../../api";
 import { ClipLoader } from "react-spinners";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Buttons({
   searchWord,
@@ -16,7 +17,8 @@ export default function Buttons({
 }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
+  const {refresh,setRefresh} = useContext(UserContext);
   const handleClose = () => {
     setOpen(false);
   };
@@ -75,7 +77,7 @@ export default function Buttons({
         <button
           onClick={() => {
             setLoading(true);
-            postAnswer(qnid, answer, mainLetter, setUserWord, setLoading);
+            postAnswer(qnid, answer, mainLetter, setUserWord, setLoading,setRefresh,refresh);
             // setUserWord("");
           }}
           className="enter-btn"
