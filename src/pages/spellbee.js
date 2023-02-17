@@ -204,7 +204,7 @@ export default function SpellBee() {
       <div
         className="game"
         style={{
-          minHeight: "90vh",
+          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -247,20 +247,20 @@ export default function SpellBee() {
             <WordList words={foundWords} />
           )}
         </div> */}
-        <div className="w-full fixed flex flex-row items-center justify-center ">
+        <div className="fixed flex flex-row items-center justify-center w-full ">
           {message && <p className="message">{message}</p>}
           {pointsAdded && (
-            <p className="points-added rounded-full animate-ping bg-white">
+            <p className="bg-white rounded-full points-added animate-ping">
               {pointsAdded}
             </p>
           )}
         </div>
         {userWord.length < 1 ? (
-          <h2 className="input self-center text-gray-300 ">
+          <h2 className="self-center text-gray-300 input ">
             <span className="cursor">|</span>Type or Click
           </h2>
         ) : (
-          <h2 className="input self-center ">
+          <h2 className="self-center input ">
             {userWord.split("").map((i) => (
               <span
                 key={i}
