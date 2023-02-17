@@ -247,7 +247,7 @@ export default function SpellBee() {
             <WordList words={foundWords} />
           )}
         </div> */}
-        <div className="w-full fixed flex flex-row items-center justify-center">
+        <div className="w-full fixed flex flex-row items-center justify-center ">
           {message && <p className="message">{message}</p>}
           {pointsAdded && (
             <p className="points-added rounded-full animate-ping bg-white">
@@ -256,11 +256,11 @@ export default function SpellBee() {
           )}
         </div>
         {userWord.length < 1 ? (
-          <h2 className="input self-center text-gray-300">
+          <h2 className="input self-center text-gray-300 ">
             <span className="cursor">|</span>Type or Click
           </h2>
         ) : (
-          <h2 className="input self-center">
+          <h2 className="input self-center ">
             {userWord.split("").map((i) => (
               <span
                 key={i}
