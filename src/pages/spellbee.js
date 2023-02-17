@@ -205,7 +205,7 @@ export default function SpellBee() {
       <CustomTitle title="Game" />
       <AnswerDialog />
 
-      <div className="game flex flex-col md:flex-row justify-evenly items-center">
+      <div className="game flex flex-col md:flex-row justify-evenly items-center m-auto">
         {/* {showHowTo && <HowTo showHowTo={() => setShowHowTo(!showHowTo)} />} */}
         {/* {showRanking && (
         <Rankings
