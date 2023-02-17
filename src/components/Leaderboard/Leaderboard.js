@@ -82,7 +82,7 @@ function LeaderboardEntry({ name, score, rank, picture }) {
         <div style={{ fontSize: "1.1rem" }}>{rank}</div>
         <img src={picture} alt="profile" className="w-8 h-8 rounded-full" />
       </div>
-      <p style={{ fontSize: "1.1rem" }} className="w-48">{name}</p>
+      <p style={{ fontSize: "1.1rem" }} className="w-36">{name}</p>
       <p style={{ fontSize: "1.1rem" }}>{score}</p>
     </div>
   );
