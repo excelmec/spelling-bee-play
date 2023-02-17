@@ -205,15 +205,25 @@ export default function SpellBee() {
       <CustomTitle title="Game" />
       <AnswerDialog />
       <div
-        className="game"
         style={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          paddingTop: "1rem",
+          paddingBottom: "2rem",
+          fontSize: "1.5rem",
+          fontWeight: "700",
+          color: "#fff",
+          marginTop: "5rem",
         }}
       >
+        Today's Score :{" "}
+        <span
+          style={{
+            color: "#1cf9c9",
+          }}
+        >
+          {score}
+        </span>
+      </div>
+      <div className="game flex flex-col md:flex-row justify-evenly items-center">
         {/* {showHowTo && <HowTo showHowTo={() => setShowHowTo(!showHowTo)} />} */}
         {/* {showRanking && (
         <Rankings
@@ -258,47 +268,6 @@ export default function SpellBee() {
             </p>
           )}
         </div> */}
-        <div
-          style={{
-            paddingTop: "1rem",
-            paddingBottom: "2rem",
-            fontSize: "1.5rem",
-            fontWeight: "700",
-            color: "#fff",
-          }}
-        >
-          Today's Score :{" "}
-          <span
-            style={{
-              color: "#1cf9c9",
-            }}
-          >
-            {score}
-          </span>
-        </div>
-        {userWord.length < 1 ? (
-          <h2 className="self-center text-gray-300 input ">
-            <span className="cursor">|</span>Click the Letters
-          </h2>
-        ) : (
-          <h2 className="self-center input ">
-            {userWord.split("").map((i) => (
-              <span
-                key={i}
-                className={
-                  i === data.mainLetter.toUpperCase()
-                    ? "text-yellow-500"
-                    : data.letters.includes(i.toLowerCase())
-                    ? "text-gray-100"
-                    : "text-gray-300"
-                }
-              >
-                {i}
-              </span>
-            ))}
-            <span className="cursor">|</span>
-          </h2>
-        )}
         <Letters
           data={data}
           shuffledLetters={
@@ -308,16 +277,41 @@ export default function SpellBee() {
           }
           setLetter={(e) => setUserWord(userWord.concat(e))}
         />
-        <Buttons
-          mainLetter={data?.mainLetter}
-          revealedAnswers={revealAnswers}
-          shuffle={() => shuffle()}
-          clearWord={() => clearWord()}
-          searchWord={() => searchWord()}
-          setUserWord={setUserWord}
-          answer={userWord}
-          qnid={data?._id}
-        />
+        <div className="h-72 flex flex-col justify-evenly">
+          {userWord.length < 1 ? (
+            <h2 className="self-center text-gray-300 input ">
+              <span className="cursor">|</span>Click the Letters
+            </h2>
+          ) : (
+            <h2 className="self-center input ">
+              {userWord.split("").map((i) => (
+                <span
+                  key={i}
+                  className={
+                    i === data.mainLetter.toUpperCase()
+                      ? "text-yellow-500"
+                      : data.letters.includes(i.toLowerCase())
+                      ? "text-gray-100"
+                      : "text-gray-300"
+                  }
+                >
+                  {i}
+                </span>
+              ))}
+              <span className="cursor">|</span>
+            </h2>
+          )}
+          <Buttons
+            mainLetter={data?.mainLetter}
+            revealedAnswers={revealAnswers}
+            shuffle={() => shuffle()}
+            clearWord={() => clearWord()}
+            searchWord={() => searchWord()}
+            setUserWord={setUserWord}
+            answer={userWord}
+            qnid={data?._id}
+          />
+        </div>
       </div>
       {/* </div> */}
     </MainLayout>
