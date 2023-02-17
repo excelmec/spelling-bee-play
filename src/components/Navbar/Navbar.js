@@ -209,7 +209,7 @@ function Navbar() {
                 </div>
                 <div
                   onClick={() => {
-                    router.push("/scoreboard");
+                    router.push("/leaderboard");
                     handleDrawerClose();
                   }}
                   className={styles.navbar__item}
