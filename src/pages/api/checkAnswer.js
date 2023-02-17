@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         _id: req.body.questionId,
       });
       const answer = req.body.answer.toUpperCase();
-     // console.log(req.body);
+      // console.log(req.body);
       const accessToken = req.headers.authorization.split(" ")[1];
       //console.log(accessToken);
       const response = await axios.get(
@@ -63,6 +63,7 @@ export default async function handler(req, res) {
       const aldreadyAnswered = question.answers.find(
         (a) => a.answer === answer
       );
+      const answerEntered = aldreadyAnswered.name;
       if (aldreadyAnswered) {
         if (
           await userAnswerModel.findOne({
@@ -101,7 +102,7 @@ export default async function handler(req, res) {
         user.score += await getScore(req.body.questionId, answer);
         await user.save();
         res.status(200).json({
-          message: "Answer already exists",
+          message: answerEntered +" coined the word.",
           answer: aldreadyAnswered,
         });
       } else {
