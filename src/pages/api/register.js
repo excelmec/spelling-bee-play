@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import userModel from "../../models/userModel";
 import connectDB from "../../utils/connectDB";
@@ -13,7 +12,12 @@ export default async function handler(req, res) {
             Authorization: req.body.headers.Authorization,
           },
         })
-        .then(async(response) => {
+        .then(async (response) => {
+          const checkUser = await userModel.findOne({
+            email: response.data.email,
+          });
+          if (checkUser?.email)
+            return res.status(200).json({ message: "User already exists" });
           const data = response.data;
           const user = await new userModel({
             name: data.name,
@@ -23,8 +27,9 @@ export default async function handler(req, res) {
             score: 0,
           });
           await user.save();
+          res.status(200).json({ message: "User created" });
         });
-      res.status(200).json({ message: "User created" });
+      
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
