@@ -9,7 +9,7 @@ import AuthHandler from "../auth/authHandler";
 import { UserContext } from "../contexts/UserContext";
 import { Loader } from "../components";
 import { toast } from "react-hot-toast";
-import { CircleLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 function Home() {
   const router = useRouter();
@@ -60,7 +60,7 @@ function Home() {
               }
             }}
           >
-            {loading ? <CircleLoader /> : "Play Now"}
+            {loading ? <ClipLoader /> : "Play Now"}
           </div>
         </div>
       </MainLayout>
