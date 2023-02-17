@@ -18,16 +18,16 @@ export default function Buttons({
     setOpen(false);
   };
   return (
-    <>
+    <div className="flex flex-col justify-center items-center ">
       <WordsEnteredDialog open={open} handleClose={handleClose} />
       <div
-        className="buttons"
+        className="buttons items-center "
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           gap: "1rem",
-          marginLeft: "2rem",
+          
         }}
       >
         <button onClick={() => clearWord()} className="delete-btn">
@@ -58,6 +58,6 @@ export default function Buttons({
       >
         View Words Entered
       </button>
-    </>
+    </div>
   );
 }
