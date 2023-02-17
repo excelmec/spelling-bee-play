@@ -17,8 +17,8 @@ export default function Buttons({
 }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  const {refresh,setRefresh} = useContext(UserContext);
+
+  const { refresh, setRefresh } = useContext(UserContext);
   const handleClose = () => {
     setOpen(false);
   };
@@ -34,10 +34,9 @@ export default function Buttons({
               justifyContent: "center",
               alignItems: "center",
               paddingTop: "1rem",
-              
             }}
           >
-            <ClipLoader color="#1cf9c9" size={40}/>
+            <ClipLoader color="#1cf9c9" size={40} />
           </div>
           <button
             onClick={() => {
@@ -77,7 +76,15 @@ export default function Buttons({
         <button
           onClick={() => {
             setLoading(true);
-            postAnswer(qnid, answer, mainLetter, setUserWord, setLoading,setRefresh,refresh);
+            postAnswer(
+              qnid,
+              answer,
+              mainLetter,
+              setUserWord,
+              refresh,
+              setLoading,
+              setRefresh
+            );
             // setUserWord("");
           }}
           className="enter-btn"

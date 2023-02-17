@@ -13,11 +13,10 @@ export const postAnswer = async (
   answer,
   mainLetter,
   setUserWord,
-  setLoading,
   refresh,
+  setLoading,
   setRefresh
 ) => {
-  const { getTodaysUserAnswers } = require("../contexts/UserContext");
   if (answer.length < 4) {
     setLoading(false);
     setUserWord("");
@@ -49,9 +48,12 @@ export const postAnswer = async (
       }
     );
     toast.success(response.data.message);
+
     setUserWord("");
-    setRefresh(!refresh);
     setLoading(false);
+    if (response.status === 200) {
+      setRefresh(!refresh);
+    }
     return response.data;
   } catch (error) {
     console.log(error);
