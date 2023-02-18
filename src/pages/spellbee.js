@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import CustomTitle from "../utils/customTitle";
 import { UserContext } from "../contexts/UserContext";
 import Protected from "../components/protectedRoute";
+import { toast } from "react-hot-toast";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
