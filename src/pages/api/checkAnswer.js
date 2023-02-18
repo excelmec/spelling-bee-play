@@ -159,7 +159,9 @@ export default async function handler(req, res) {
             res.status(200).json({ message: "Answer added" });
           }
         } catch (err) {
-          if (err.response.status === 404) {
+
+      console.log(err);
+          if (err?.response?.status === 404) {
             res.status(404).json({ message: "Answer is not a valid word." });
             return;
           } else {
@@ -187,7 +189,6 @@ export default async function handler(req, res) {
       //   }
       // }
     } catch (err) {
-      console.log(err);
       res.status(500).json({ error: err.message });
     }
   } else {

@@ -34,32 +34,39 @@ export const postAnswer = async (
       setUserWord("");
       return toast.error("Answer must contain the main letter");
     }
-    try {
-      const response = await api.post(
-        "/checkAnswer",
-        {
-          questionId: qnId,
-          answer: answer,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${await AuthHandler.aysncGetAccessToken()}`,
+    const dictionary = await axios.get(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${answer}`
+    );
+    console.log(dictionary);
+    if (dictionary.data[0].word === answer) {
+      console.log("here");
+      try {
+        const response = await api.post(
+          "/checkAnswer",
+          {
+            questionId: qnId,
+            answer: answer,
           },
-        }
-      );
-      toast.success(response.data.message);
+          {
+            headers: {
+              authorization: `Bearer ${await AuthHandler.aysncGetAccessToken()}`,
+            },
+          }
+        );
+        toast.success(response.data.message);
 
-      setUserWord("");
-      setLoading(false);
-      if (response.status === 200) {
-        setRefresh(!refresh);
+        setUserWord("");
+        setLoading(false);
+        if (response.status === 200) {
+          setRefresh(!refresh);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+        setUserWord("");
+        setLoading(false);
       }
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-      setUserWord("");
-      setLoading(false);
     }
   } else {
     if (answer.length < 4) {
@@ -67,33 +74,38 @@ export const postAnswer = async (
       setUserWord("");
       return toast.error("Answer must be at least 4 characters");
     }
-    try {
-      const response = await api.post(
-        "/checkAnswer",
-        {
-          questionId: qnId,
-          answer: answer,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${await AuthHandler.aysncGetAccessToken()}`,
+    const dictionary = await axios.get(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${answer}`
+    );
+    if (dictionary.data[0].word === answer) {
+      try {
+        const response = await api.post(
+          "/checkAnswer",
+          {
+            questionId: qnId,
+            answer: answer,
           },
+          {
+            headers: {
+              authorization: `Bearer ${await AuthHandler.aysncGetAccessToken()}`,
+            },
+          }
+        );
+        toast.success(response.data.message);
+
+        setUserWord("");
+        setLoading(false);
+        if (response.status === 200) {
+          setRefresh(!refresh);
         }
-      );
-      toast.success(response.data.message);
 
-      setUserWord("");
-      setLoading(false);
-      if (response.status === 200) {
-        setRefresh(!refresh);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+        setUserWord("");
+        setLoading(false);
       }
-
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-      setUserWord("");
-      setLoading(false);
     }
   }
 };
