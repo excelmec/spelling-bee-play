@@ -5,7 +5,7 @@ import connectDB from "../../utils/connectDB";
 import axios from "axios";
 
 export default async function handler(req, res) {
-  validWords = [
+  const validWords = [
     "modular",
     "auroral",
     "dullard",
@@ -254,6 +254,7 @@ export default async function handler(req, res) {
         }
       }
     } catch (err) {
+      console.log(err);
       res.status(500).json({ error: err.message });
     }
   } else {
