@@ -50,6 +50,7 @@ function AnswerDialog({ open, handleClose }) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          textAlign: "center",
         }}
       >
         Answers for Yesterday's Spell Bee
