@@ -34,7 +34,7 @@ export default function Leaderboard() {
         paddingBottom: "3rem",
       }}
     >
-      <h1 className="text-4xl md:text-5xl font-bold">Leaderboard</h1>
+      <h1 className="text-4xl font-bold md:text-5xl">Leaderboard</h1>
       <div className="flex flex-col gap-4 mx-auto overflow-y-hidden text-center w-96">
         <div className="flex flex-row text-xl justify-evenly">
           <div
@@ -51,6 +51,13 @@ export default function Leaderboard() {
           <p>Name</p>
           <p>Score</p>
         </div>
+        <div style={{
+          paddingLeft: "1rem",
+          paddingRight: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}>
         {leaderboard.map((entry, index) => {
           return (
             <LeaderboardEntry
@@ -62,6 +69,7 @@ export default function Leaderboard() {
             />
           );
         })}
+        </div>
       </div>
     </div>
   );
@@ -82,7 +90,7 @@ function LeaderboardEntry({ name, score, rank, picture }) {
         <div style={{ fontSize: "1.1rem" }}>{rank}</div>
         <img src={picture} alt="profile" className="w-8 h-8 rounded-full" />
       </div>
-      <p style={{ fontSize: "1.1rem" }} className="w-20  md:w-36">{name}</p>
+      <p style={{ fontSize: "1.1rem" }} className="w-36 ">{name}</p>
       <p style={{ fontSize: "1.1rem" }}>{score}</p>
     </div>
   );
