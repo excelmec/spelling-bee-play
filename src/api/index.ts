@@ -38,7 +38,7 @@ export const postAnswer = async (
       `https://api.dictionaryapi.dev/api/v2/entries/en/${answer}`
     );
     console.log(dictionary);
-    if (dictionary.data[0].word === answer) {
+    if (dictionary.data[0].word.toUpperCase() === answer) {
       console.log("here");
       try {
         const response = await api.post(

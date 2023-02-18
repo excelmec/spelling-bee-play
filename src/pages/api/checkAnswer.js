@@ -5,6 +5,87 @@ import connectDB from "../../utils/connectDB";
 import axios from "axios";
 
 export default async function handler(req, res) {
+  validWords = [
+    "modular",
+    "auroral",
+    "dullard",
+    "doldrum",
+    "dollar",
+    "murmur",
+    "armour",
+    "rumour",
+    "ardour",
+    "amoral",
+    "ramrod",
+    "radula",
+    "alarum",
+    "morula",
+    "ormolu",
+    "dammar",
+    "marram",
+    "adoral",
+    "dolour",
+    "marula",
+    "maraud",
+    "murram",
+    "moral",
+    "rural",
+    "drama",
+    "alarm",
+    "molar",
+    "odour",
+    "mural",
+    "aroma",
+    "ardor",
+    "aural",
+    "droll",
+    "dural",
+    "malar",
+    "dolor",
+    "durum",
+    "drool",
+    "aurum",
+    "damar",
+    "durra",
+    "lourd",
+    "ramal",
+    "douar",
+    "maror",
+    "larum",
+    "doora",
+    "rumal",
+    "moror",
+    "allar",
+    "room",
+    "door",
+    "road",
+    "oral",
+    "roll",
+    "drum",
+    "odor",
+    "roar",
+    "aura",
+    "roam",
+    "lard",
+    "marl",
+    "dram",
+    "rood",
+    "dour",
+    "ordo",
+    "mura",
+    "alar",
+    "lour",
+    "rara",
+    "mrad",
+    "ular",
+    "dard",
+    "auro",
+    "marm",
+    "rool",
+    "roor",
+    "orad",
+    "umor",
+  ];
   async function getScore(questionId, answer) {
     const question = await questionModel.findOne({
       _id: questionId,
@@ -106,88 +187,72 @@ export default async function handler(req, res) {
           answer: aldreadyAnswered,
         });
       } else {
-        try {
-          const dictionary = await axios.get(
-            `${process.env.DICTIONARY_API_URL}/${answer}`
-          );
-          if (dictionary.status === 200 && dictionary.data[0].word === answer) {
-            question.answers.push({
-              answer: answer,
-              name: name,
-              email: email,
+        // try {
+        //   const dictionary = await axios.get(
+        //     `${process.env.DICTIONARY_API_URL}/${answer}`
+        //   );
+        //   if (dictionary.status === 404) {
+        //     res.status(500).json({ message: "Answer is not a valid word." });
+        //     return;
+        //   }
+        // } catch (err) {
+        //   if (err.response.status === 404) {
+        //     res.status(404).json({ message: "Answer is not a valid word." });
+        //     return;
+        //   }
+        // }
+        if (validWords.includes(answer.toLowerCase())) {
+          question.answers.push({
+            answer: answer,
+            name: name,
+            email: email,
+            excelId: excelId,
+          });
+          await question.save();
+          if (
+            await userAnswerModel.findOne({
+              questionId: req.body.questionId,
               excelId: excelId,
-            });
-            await question.save();
-            if (
-              await userAnswerModel.findOne({
-                questionId: req.body.questionId,
-                excelId: excelId,
-              })
-            ) {
-              const userAnswer = await userAnswerModel.findOneAndUpdate(
-                { questionId: req.body.questionId, excelId: excelId },
-                {
-                  $inc: {
-                    totalScore: await getScore(req.body.questionId, answer),
-                  },
-                  $push: {
-                    score: {
-                      point: await getScore(req.body.questionId, answer),
-                      answer: answer,
-                    },
-                  },
-                }
-              );
-              await userAnswer.save();
-            } else {
-              const userAnswer = new userAnswerModel({
-                questionId: req.body.questionId,
-                excelId: excelId,
-                score: {
-                  point: await getScore(req.body.questionId, answer),
-                  answer: answer,
+            })
+          ) {
+            const userAnswer = await userAnswerModel.findOneAndUpdate(
+              { questionId: req.body.questionId, excelId: excelId },
+              {
+                $inc: {
+                  totalScore: await getScore(req.body.questionId, answer),
                 },
-                totalScore: await getScore(req.body.questionId, answer),
-              });
-              await userAnswer.save();
-            }
-            const user = await userModel.findOne({
-              excelId: excelId,
-            });
-            user.score += await getScore(req.body.questionId, answer);
-            await user.save();
-            res.status(200).json({ message: "Answer added" });
-          }
-        } catch (err) {
-
-      console.log(err);
-          if (err?.response?.status === 404) {
-            res.status(404).json({ message: "Answer is not a valid word." });
-            return;
+                $push: {
+                  score: {
+                    point: await getScore(req.body.questionId, answer),
+                    answer: answer,
+                  },
+                },
+              }
+            );
+            await userAnswer.save();
           } else {
-            res
-              .status(429)
-              .json({
-                message: "We are at capacity . Please try again later..",
-              });
+            const userAnswer = new userAnswerModel({
+              questionId: req.body.questionId,
+              excelId: excelId,
+              score: {
+                point: await getScore(req.body.questionId, answer),
+                answer: answer,
+              },
+              totalScore: await getScore(req.body.questionId, answer),
+            });
+            await userAnswer.save();
           }
+          const user = await userModel.findOne({
+            excelId: excelId,
+          });
+          user.score += await getScore(req.body.questionId, answer);
+          await user.save();
+          res.status(200).json({ message: "Answer added" });
+        } else {
+          res.status(500).json({ message: "Answer is not a valid word." });
+          return;
         }
       }
-      // try {
-      //   const dictionary = await axios.get(
-      //     `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${answer}?key=${process.env.DICTIONARY_API_KEY}`
-      //   );
-      //   if (dictionary[0].meta.id !== answer) {
-
-      //     res.status(200).json({ message: "Answer is not a valid word." });
-      //     return;
-      //   }
-      // } catch (err) {
-      //   if (err.response.status === 404) {
-      //     res.status(404).json({ message: "Answer is not a valid word." });
-      //     return;
-      //   }
-      // }
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
