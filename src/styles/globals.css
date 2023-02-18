@@ -5,7 +5,7 @@
 
 @layer components {
   .game {
-    @apply flex flex-col items-center w-screen pb-2 font-sans text-white ;
+    @apply flex flex-col items-center w-screen pb-2 font-sans text-white;
   }
   .input {
     @apply flex items-center justify-center h-12 text-2xl font-bold text-yellow-500;
@@ -23,22 +23,10 @@
     @apply active:scale-90 active:border-gray-50;
   }
   .buttons {
-    @apply flex flex-row items-center justify-center mt-16 ;
+    @apply flex flex-row items-center justify-center mt-16;
   }
   .buttons_1 {
     @apply flex flex-row items-center justify-center mt-8;
-  }
-  .word-list {
-    @apply flex flex-row items-center justify-between w-full p-3 mt-1 font-light border rounded-lg;
-  }
-  .word-list-words {
-    @apply flex flex-row flex-wrap w-full;
-  }
-  .expanded-list-words {
-    @apply flex flex-col flex-wrap w-full;
-  }
-  .expanded-list-word {
-    @apply px-1 py-2 border-b border-b-gray-300;
   }
   .arrow {
     @apply self-end w-3 h-3 mb-3 rotate-45 border-b-2 border-r-2 border-black;
@@ -67,99 +55,19 @@
   .menu-item {
     @apply w-full p-2 hover:bg-gray-800 active:bg-slate-900;
   }
-  .ranking-bar {
-    @apply z-10 flex flex-row items-center justify-between mr-2;
-  }
-  .current-rank-icon {
-    @apply flex items-center justify-center w-8 h-8 bg-yellow-300 rounded-full;
-  }
-  .past-rank-icon {
-    @apply flex items-center justify-center w-2 h-2 bg-yellow-300 rounded-full;
-  }
-  .future-rank-icon {
-    @apply flex items-center justify-center w-2 h-2 bg-gray-300 rounded-full;
-  }
-  .final-rank-icon {
-    @apply flex items-center justify-center w-3 h-3 bg-gray-300;
-  }
   .line {
     @apply mx-1 mb-4 mr-2 -mt-4 border-t;
   }
   .cursor {
     @apply z-20 flex items-center justify-center w-3 mb-1 text-3xl font-medium text-yellow-300;
   }
-  .how-to {
-    @apply fixed z-30 w-full p-4 bg-blue-700 border shadow-sm top-10 md:w-2/3;
-  }
-  .rankings {
-    @apply fixed z-30 w-full p-4 bg-blue-700 border shadow-sm top-10 md:w-2/3;
-  }
-  .hints {
-    @apply fixed z-30 w-full p-4 bg-white border shadow-sm top-10 md:w-2/3;
-  }
-  .how-to-section {
-    @apply px-2;
-  }
-  .message {
-    @apply px-2 py-1 m-2 text-white bg-black rounded font-extralight;
-  }
-  .points-added {
-    @apply z-30 text-xl font-semibold;
-  }
 }
 .game {
   font-family: "Mulish", sans-serif;
 }
-.expanded-list-words {
-  min-height: 50vh;
-  width: calc(50% - 3vw);
-}
-
-.slide-in-text {
-  animation: slide-in 0.15s linear;
-}
-
-.slide-out-text {
-  animation: slide-out 0.05s linear;
-}
-
-.slide-up {
-  animation: slide-up 0.15s linear;
-}
-
-@keyframes slide-up {
-  from {
-    transform: translateY(50%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateY(-50%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-}
-
-.message {
-  animation: moving-msg 1s linear;
-}
-
-@keyframes moving-msg {
-  from {
-    transform: translateY(25%);
-  }
-  to {
-    transform: translateY(-10%);
-  }
-}
 @media (max-width: 767px) {
   .hex:active .hex-middle {
-    background-color: rgb(209, 219, 219);
+    background-color: #1cf9c9;
   }
   .hex:active .hex-top {
     border-right: calc(0.75 * 30px) solid #1cf9c9;

@@ -6,7 +6,6 @@ import styles from "./Navbar.module.css";
 import { UserContext } from "../../contexts/UserContext";
 
 import AnswerDialog from "../AnswersDialog/AnswerDialog";
-import RulesDialog from "../RulesDialog/RulesDialog";
 import HowToPlayDialog from "../HowToPlayDialog/HowToPlayDialog";
 
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -20,18 +19,12 @@ function Navbar() {
 
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
-  const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleClose1 = () => {
-    setOpen1(false);
-  };
-
   const handleDrawerOpen = () => {
     setOpen3(true);
   };
@@ -55,10 +48,12 @@ function Navbar() {
   return (
     <>
       <AnswerDialog open={open} handleClose={handleClose} />
-      <RulesDialog open={open1} handleClose={handleClose1} />
       <HowToPlayDialog open={open2} handleClose={handleClose2} />
       <div className={styles.navbar_container}>
-        <Image src={excelLogo} alt="Excel Logo" width={150} height={150} />
+        <Image src={excelLogo} alt="Excel Logo" width={150} height={150} style={{
+          marginLeft: "1rem",
+          marginTop: "1rem",
+        }}/>
         <div className={styles.navbar__desktop}>
           {/* <div
             className={styles.navbar__item}
@@ -83,14 +78,6 @@ function Navbar() {
             }}
           >
             How to Play
-          </div>
-          <div
-            className={styles.navbar__item}
-            onClick={() => {
-              setOpen1(true);
-            }}
-          >
-            Rules
           </div>
           <div
             className={styles.navbar__item}
@@ -171,15 +158,6 @@ function Navbar() {
                 height={150}
               />
               <div className={styles.navbar_items_mob}>
-                {/* <div
-                  onClick={() => {
-                    router.push("/");
-                    handleDrawerClose();
-                  }}
-                  className={styles.navbar__item}
-                >
-                  Home
-                </div> */}
                 <div
                   onClick={() => {
                     router.push("/spellbee");
@@ -197,15 +175,6 @@ function Navbar() {
                   className={styles.navbar__item}
                 >
                   How to Play
-                </div>
-                <div
-                  onClick={() => {
-                    setOpen1(true);
-                    handleDrawerClose();
-                  }}
-                  className={styles.navbar__item}
-                >
-                  Rules
                 </div>
                 <div
                   onClick={() => {

@@ -1,17 +1,85 @@
 .footer_container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  row-gap: 2rem;
-  justify-content: center;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  justify-content: space-between;
 }
 .footer_text {
   font-size: 1.5rem;
   font-weight: 600;
   color: #1cf9c9;
 }
-@media (max-width: 768px) {
+.footer_icons
+{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 1.5rem;
+}
+.footer_icon {
+  font-size: 2rem;
+  color: #1cf9c9;
+  cursor: pointer;
+}
+.footer_icon:hover {
+  color: #1cf9c9;
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}
+.excellogo {
+  width: 15rem;
+  cursor: pointer;
+  height: auto;
+}
+.excellogo:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}
+.meclogo {
+  width: 15rem;
+  cursor: pointer;
+  height:auto;
+}
+.meclogo:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}
+.footer_container_mobile {
+  display: none;
+}
+@media (max-width: 982px) {
   .footer_text {
     font-size: 1.2rem;
+  }
+  .footer_icon {
+    font-size: 1.5rem;
+  }
+  .excellogo {
+    width: 10rem;
+  }
+  .meclogo {
+    width: 10rem;
+  }
+
+}
+@media (max-width:734px) {
+  .footer_container {
+    display: none;
+  }
+  .footer_container_mobile {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    gap: 2rem;
+    justify-content: space-between;
   }
 }

@@ -13,7 +13,7 @@ export default function leaderboard() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          paddingTop: "6rem",
+          paddingTop: "8rem",
         }}
       >
         <Leaderboard />
