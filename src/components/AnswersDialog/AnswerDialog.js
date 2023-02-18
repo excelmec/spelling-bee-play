@@ -62,6 +62,7 @@ function AnswerDialog({ open, handleClose }) {
           flexWrap: "wrap",
           gap: "1rem",
         }}
+        sx={{ "&::-webkit-scrollbar": { display: "none" } }}
       >
         <div
           style={{

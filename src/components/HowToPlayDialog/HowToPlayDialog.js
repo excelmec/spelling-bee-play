@@ -46,6 +46,7 @@ function HowToPlayDialog({ open, handleClose }) {
           flexDirection: "column",
           gap: "1rem",
         }}
+        sx={{ "&::-webkit-scrollbar": { display: "none" } }}
       >
         {howtoPlayData.map((play, index) => {
           return (
