@@ -4,6 +4,7 @@ import WordsEnteredDialog from "../WordsEnteredDialog/WordsEnteredDialog";
 import { postAnswer } from "../../api";
 import { ClipLoader } from "react-spinners";
 import { UserContext } from "../../contexts/UserContext";
+import { toast } from "react-hot-toast";
 
 export default function Buttons({
   mainLetter,
@@ -64,17 +65,18 @@ export default function Buttons({
         </button>
         <button
           onClick={() => {
-            setLoading(true);
-            postAnswer(
-              qnid,
-              answer,
-              mainLetter,
-              setUserWord,
-              refresh,
-              answers,
-              setLoading,
-              setRefresh
-            );
+            // setLoading(true);
+            // postAnswer(
+            //   qnid,
+            //   answer,
+            //   mainLetter,
+            //   setUserWord,
+            //   refresh,
+            //   answers,
+            //   setLoading,
+            //   setRefresh
+            // );
+            toast.error("We will be back soon! Stay tuned!")
           }}
           className="enter-btn"
         >
