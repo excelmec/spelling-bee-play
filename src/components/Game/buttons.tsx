@@ -65,18 +65,18 @@ export default function Buttons({
         </button>
         <button
           onClick={() => {
-            // setLoading(true);
-            // postAnswer(
-            //   qnid,
-            //   answer,
-            //   mainLetter,
-            //   setUserWord,
-            //   refresh,
-            //   answers,
-            //   setLoading,
-            //   setRefresh
-            // );
-            toast.error("We will be back soon! Stay tuned!")
+            setLoading(true);
+            postAnswer(
+              qnid,
+              answer,
+              mainLetter,
+              setUserWord,
+              refresh,
+              answers,
+              setLoading,
+              setRefresh
+            );
+            // toast.error("We will be back soon! Stay tuned!")
           }}
           className="enter-btn"
         >
