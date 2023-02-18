@@ -76,7 +76,7 @@ function AnswerDialog({ open, handleClose }) {
             color: "#2de1da",
           }}
         >
-          Letters : {yesterdayQuestion?.letters.join(" , ")}
+          Letters : {yesterdayQuestion?.letters?.join(" , ")}
         </div>
         <div
           style={{
