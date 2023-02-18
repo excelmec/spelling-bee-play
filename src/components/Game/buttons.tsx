@@ -6,12 +6,10 @@ import { ClipLoader } from "react-spinners";
 import { UserContext } from "../../contexts/UserContext";
 
 export default function Buttons({
-  searchWord,
   mainLetter,
   setUserWord,
   shuffle,
   clearWord,
-  revealedAnswers,
   qnid,
   answer,
 }) {
@@ -51,9 +49,9 @@ export default function Buttons({
     );
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center h-full gap-4">
       <WordsEnteredDialog open={open} handleClose={handleClose} />
-      <div className="flex flex-row justify-center items-center gap-4">
+      <div className="flex flex-row items-center justify-center gap-4">
         <button onClick={() => clearWord()} className="delete-btn">
           Delete
         </button>
@@ -61,7 +59,6 @@ export default function Buttons({
           className="refresh-btn"
           data-testid="shuffle-btn"
           onClick={() => shuffle()}
-          disabled={revealedAnswers}
         >
           <FiRefreshCcw />
         </button>
@@ -77,10 +74,8 @@ export default function Buttons({
               setLoading,
               setRefresh
             );
-            // setUserWord("");
           }}
           className="enter-btn"
-          disabled={revealedAnswers}
         >
           Enter
         </button>

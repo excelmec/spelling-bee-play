@@ -1,7 +1,6 @@
 import { Dialog, DialogContent } from "@mui/material";
 import React, { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { answersData } from "../../data/answersData";
 
 function WordsEnteredDialog({ open, handleClose }) {
   const { answers } = useContext(UserContext);
