@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { createContext } from "react";
+import { toast } from "react-hot-toast";
 import AuthHandler from "../auth/authHandler";
 
 export const UserContext = createContext();
