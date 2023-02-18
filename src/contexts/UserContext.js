@@ -54,6 +54,8 @@ function UserDetails(props) {
       ).then((access_token) => {
         if (access_token) {
           getProfile(access_token);
+        } else {
+          localStorage.removeItem("refreshToken");
         }
       });
     } else {
