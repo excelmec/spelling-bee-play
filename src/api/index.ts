@@ -62,6 +62,11 @@ export const postAnswer = async (
       setLoading(false);
     }
   } else {
+    if (answer.length < 4) {
+      setLoading(false);
+      setUserWord("");
+      return toast.error("Answer must be at least 4 characters");
+    }
     try {
       const response = await api.post(
         "/checkAnswer",
