@@ -50,10 +50,18 @@ function Navbar() {
       <AnswerDialog open={open} handleClose={handleClose} />
       <HowToPlayDialog open={open2} handleClose={handleClose2} />
       <div className={styles.navbar_container}>
-        <Image src={excelLogo} alt="Excel Logo" width={150} height={150} style={{
-          marginLeft: "1rem",
-          marginTop: "1rem",
-        }}/>
+        <a href="https://play.excelmec.org/" target="_blank" rel="noreferrer">
+          <Image
+            src={excelLogo}
+            alt="Excel Logo"
+            width={150}
+            height={150}
+            style={{
+              marginLeft: "1rem",
+              marginTop: "1rem",
+            }}
+          />
+        </a>
         <div className={styles.navbar__desktop}>
           {/* <div
             className={styles.navbar__item}
