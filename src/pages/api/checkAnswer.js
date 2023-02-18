@@ -102,16 +102,31 @@ export default async function handler(req, res) {
         user.score += await getScore(req.body.questionId, answer);
         await user.save();
         res.status(200).json({
-          message: answerEntered +" coined the word.",
+          message: answerEntered + " coined the word.",
           answer: aldreadyAnswered,
         });
       } else {
+        // try {
+        //   const dictionary = await axios.get(
+        //     `${process.env.DICTIONARY_API_URL}/${answer}`
+        //   );
+        //   if (dictionary.status === 404) {
+        //     res.status(500).json({ message: "Answer is not a valid word." });
+        //     return;
+        //   }
+        // } catch (err) {
+        //   if (err.response.status === 404) {
+        //     res.status(404).json({ message: "Answer is not a valid word." });
+        //     return;
+        //   }
+        // }
         try {
           const dictionary = await axios.get(
-            `${process.env.DICTIONARY_API_URL}/${answer}`
+            `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${answer}?key=${process.env.DICTIONARY_API_KEY}`
           );
-          if (dictionary.status === 404) {
-            res.status(500).json({ message: "Answer is not a valid word." });
+          if (dictionary[0].meta.id !== answer) {
+
+            res.status(200).json({ message: "Answer is not a valid word." });
             return;
           }
         } catch (err) {
@@ -120,7 +135,6 @@ export default async function handler(req, res) {
             return;
           }
         }
-
         question.answers.push({
           answer: answer,
           name: name,
