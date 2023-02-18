@@ -77,7 +77,7 @@ export default function SpellBee() {
           <div className="flex flex-col items-center">
             <div
               style={{
-                paddingTop: "1rem",
+                paddingTop: "5rem",
                 paddingBottom: "2rem",
                 fontSize: "1.5rem",
                 fontWeight: "700",

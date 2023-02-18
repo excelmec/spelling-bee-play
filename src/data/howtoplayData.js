@@ -1,9 +1,11 @@
 export const howtoPlayData = [
-  "The game consists of 10 questions.",
-  "Each question has 4 options.",
-  "You have 10 seconds to answer each question.",
-  "You can skip a question by clicking on the skip button.",
-  "You can use the 50-50 lifeline by clicking on the 50-50 button.",
-  "You can use the ask the audience lifeline by clicking on the ask the audience button.",
-  "You can use the phone a friend lifeline by clicking on the phone a friend button.",
+  "At the beginning of each round, you will be presented with a set of seven letters that you can use to form words.",
+  "You can move the letters around to form different words, but you must only use the seven letters listed.",
+  "The word must mandatorily contain the centre letter.",
+  "Each word you submit must contain at least four letters.",
+  "You can submit as many words as you like within the time limit of each round.",
+  "The new set of letters will be revealed everyday at 08:00 AM IST.",
+  "The time limit for each game is 24 hours.",
+  "Each valid word will be given points based on the number of letters and also extra 5 points would be awarded if you submit a pangram.",
+  "There is no limit to the number of attempts allowed.",
 ];
