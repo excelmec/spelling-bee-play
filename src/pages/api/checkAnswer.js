@@ -106,81 +106,88 @@ export default async function handler(req, res) {
           answer: aldreadyAnswered,
         });
       } else {
-        // try {
-        //   const dictionary = await axios.get(
-        //     `${process.env.DICTIONARY_API_URL}/${answer}`
-        //   );
-        //   if (dictionary.status === 404) {
-        //     res.status(500).json({ message: "Answer is not a valid word." });
-        //     return;
-        //   }
-        // } catch (err) {
-        //   if (err.response.status === 404) {
-        //     res.status(404).json({ message: "Answer is not a valid word." });
-        //     return;
-        //   }
-        // }
         try {
           const dictionary = await axios.get(
-            `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${answer}?key=${process.env.DICTIONARY_API_KEY}`
+            `${process.env.DICTIONARY_API_URL}/${answer}`
           );
-          if (dictionary[0].meta.id !== answer) {
-
-            res.status(200).json({ message: "Answer is not a valid word." });
-            return;
+          if (dictionary.status === 200 && dictionary.data[0].word === answer) {
+            question.answers.push({
+              answer: answer,
+              name: name,
+              email: email,
+              excelId: excelId,
+            });
+            await question.save();
+            if (
+              await userAnswerModel.findOne({
+                questionId: req.body.questionId,
+                excelId: excelId,
+              })
+            ) {
+              const userAnswer = await userAnswerModel.findOneAndUpdate(
+                { questionId: req.body.questionId, excelId: excelId },
+                {
+                  $inc: {
+                    totalScore: await getScore(req.body.questionId, answer),
+                  },
+                  $push: {
+                    score: {
+                      point: await getScore(req.body.questionId, answer),
+                      answer: answer,
+                    },
+                  },
+                }
+              );
+              await userAnswer.save();
+            } else {
+              const userAnswer = new userAnswerModel({
+                questionId: req.body.questionId,
+                excelId: excelId,
+                score: {
+                  point: await getScore(req.body.questionId, answer),
+                  answer: answer,
+                },
+                totalScore: await getScore(req.body.questionId, answer),
+              });
+              await userAnswer.save();
+            }
+            const user = await userModel.findOne({
+              excelId: excelId,
+            });
+            user.score += await getScore(req.body.questionId, answer);
+            await user.save();
+            res.status(200).json({ message: "Answer added" });
           }
         } catch (err) {
           if (err.response.status === 404) {
             res.status(404).json({ message: "Answer is not a valid word." });
             return;
+          } else {
+            res
+              .status(429)
+              .json({
+                message: "We are at capacity . Please try again later..",
+              });
           }
         }
-        question.answers.push({
-          answer: answer,
-          name: name,
-          email: email,
-          excelId: excelId,
-        });
-        await question.save();
-        if (
-          await userAnswerModel.findOne({
-            questionId: req.body.questionId,
-            excelId: excelId,
-          })
-        ) {
-          const userAnswer = await userAnswerModel.findOneAndUpdate(
-            { questionId: req.body.questionId, excelId: excelId },
-            {
-              $inc: { totalScore: await getScore(req.body.questionId, answer) },
-              $push: {
-                score: {
-                  point: await getScore(req.body.questionId, answer),
-                  answer: answer,
-                },
-              },
-            }
-          );
-          await userAnswer.save();
-        } else {
-          const userAnswer = new userAnswerModel({
-            questionId: req.body.questionId,
-            excelId: excelId,
-            score: {
-              point: await getScore(req.body.questionId, answer),
-              answer: answer,
-            },
-            totalScore: await getScore(req.body.questionId, answer),
-          });
-          await userAnswer.save();
-        }
-        const user = await userModel.findOne({
-          excelId: excelId,
-        });
-        user.score += await getScore(req.body.questionId, answer);
-        await user.save();
-        res.status(200).json({ message: "Answer added" });
       }
+      // try {
+      //   const dictionary = await axios.get(
+      //     `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${answer}?key=${process.env.DICTIONARY_API_KEY}`
+      //   );
+      //   if (dictionary[0].meta.id !== answer) {
+
+      //     res.status(200).json({ message: "Answer is not a valid word." });
+      //     return;
+      //   }
+      // } catch (err) {
+      //   if (err.response.status === 404) {
+      //     res.status(404).json({ message: "Answer is not a valid word." });
+      //     return;
+      //   }
+      // }
     } catch (err) {
+      console.log(err);
       res.status(500).json({ error: err.message });
     }
   } else {
