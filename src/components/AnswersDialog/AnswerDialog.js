@@ -63,30 +63,37 @@ function AnswerDialog({ open, handleClose }) {
           gap: "1rem",
         }}
       >
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
         <div
           style={{
-            fontSize: "1.2rem",
-            fontWeight: "700",
-            color: "#2de1da",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          Letters : {yesterdayQuestion?.letters?.join(" , ")}
-        </div>
-        <div
-          style={{
-            fontSize: "1.2rem",
-            fontWeight: "700",
-            color: "#2de1da",
-          }}
-        >
-          Main Letter : {yesterdayQuestion?.mainLetter}
-        </div>
+          {yesterdayQuestion?.letters && (
+            <div
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "700",
+                color: "#2de1da",
+              }}
+            >
+              Letters : {yesterdayQuestion.letters.join(", ")}
+            </div>
+          )}
+
+          {yesterdayQuestion?.mainLetter && (
+            <div
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "700",
+                color: "#2de1da",
+              }}
+            >
+              Main Letter : {yesterdayQuestion.mainLetter}
+            </div>
+          )}
         </div>
         <div
           style={{
