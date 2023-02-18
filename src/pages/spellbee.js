@@ -47,10 +47,15 @@ export default function SpellBee() {
   const { score } = useContext(UserContext);
 
   useEffect(() => {
+    try{
     if (localStorage.getItem("refreshToken") == null) {
       router.push("/");
       return;
     }
+  }
+  catch(err){
+    alert("Enable Third Party Cookies in your Browser Settings.")
+  }
   }, []);
 
   if (!data) {
