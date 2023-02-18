@@ -7,7 +7,7 @@ export default function Letters({setLetter, shuffledLetters, data}) {
   return null
 
   return (
-    <div className="h-72 md:h-96 letters justify-center flex flex-row md:p-4 -translate-x-2">
+    <div className="h-72 md:h-96 letters justify-center flex flex-row  ">
       
       <div className="flex flex-col">
         <Hexagon center={false} letter={shuffledLetters && shuffledLetters[0]} setLetter={() => setLetter(shuffledLetters[0])}/>

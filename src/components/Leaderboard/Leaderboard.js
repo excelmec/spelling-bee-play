@@ -35,7 +35,7 @@ export default function Leaderboard() {
       }}
     >
       <h1 className="text-4xl md:text-5xl font-bold">Leaderboard</h1>
-      <div className="flex flex-col gap-4 mx-auto overflow-y-hidden text-center w-full md:w-96">
+      <div className="flex flex-col gap-4 mx-auto overflow-y-hidden text-center w-96">
         <div className="flex flex-row text-xl justify-evenly">
           <div
             style={{
@@ -82,7 +82,7 @@ function LeaderboardEntry({ name, score, rank, picture }) {
         <div style={{ fontSize: "1.1rem" }}>{rank}</div>
         <img src={picture} alt="profile" className="w-8 h-8 rounded-full" />
       </div>
-      <p style={{ fontSize: "1.1rem" }} className="w-36">{name}</p>
+      <p style={{ fontSize: "1.1rem" }} className="w-20  md:w-36">{name}</p>
       <p style={{ fontSize: "1.1rem" }}>{score}</p>
     </div>
   );
