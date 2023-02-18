@@ -16,7 +16,7 @@ export default function Buttons({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { refresh, setRefresh } = useContext(UserContext);
+  const { refresh, setRefresh,answers } = useContext(UserContext);
   const handleClose = () => {
     setOpen(false);
   };
@@ -71,6 +71,7 @@ export default function Buttons({
               mainLetter,
               setUserWord,
               refresh,
+              answers,
               setLoading,
               setRefresh
             );
