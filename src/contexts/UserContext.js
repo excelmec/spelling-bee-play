@@ -78,7 +78,7 @@ function UserDetails(props) {
         }
       }
     } catch (err) {
-      alert("Enable Third Party Cookies in your Browser Settings.");
+      toast.error("Enable Third Party Cookies in your Browser Settings.");
     }
     // eslint-disable-next-line
   }, []);

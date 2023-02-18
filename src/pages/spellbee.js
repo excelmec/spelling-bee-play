@@ -54,7 +54,7 @@ export default function SpellBee() {
     }
   }
   catch(err){
-    alert("Enable Third Party Cookies in your Browser Settings.")
+    toast.error("Enable Third Party Cookies in your Browser Settings.")
   }
   }, []);
 
