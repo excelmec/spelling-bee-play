@@ -30,7 +30,7 @@ export default class AccountHandler {
                     // console.log(res)
                     if (res.status === 200) profile = res.data;
                 } catch (err) {
-                    console.log("Failed to fetch user profile");
+                    //console.log("Failed to fetch user profile");
                 }
             }
         }

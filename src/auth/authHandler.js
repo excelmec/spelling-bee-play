@@ -77,7 +77,7 @@ export default class AuthHandler {
         // console.log("acccess: ",access_token)
         this.setAccessToken(access_token);
       } catch (err) {
-        console.log("Failed to fetch access token");
+        //console.log("Failed to fetch access token");
       }
     }
 
