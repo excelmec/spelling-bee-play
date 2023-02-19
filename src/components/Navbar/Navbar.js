@@ -50,7 +50,7 @@ function Navbar() {
       <AnswerDialog open={open} handleClose={handleClose} />
       <HowToPlayDialog open={open2} handleClose={handleClose2} />
       <div className={styles.navbar_container}>
-        <a href="https://play.excelmec.org/" target="_blank" rel="noreferrer">
+        <a href="https://play.excelmec.org/">
           <Image
             src={excelLogo}
             alt="Excel Logo"
