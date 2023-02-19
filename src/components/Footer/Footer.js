@@ -14,7 +14,7 @@ function Footer() {
   return (
     <>
       <div className={styles.footer_container}>
-        <a href="https://excelmec.org/" target="_blank" rel="noreferrer">
+        <a href="https://excelmec.org/">
           <Image
             src={excelmainlogo}
             alt="Excel Logo"
@@ -24,39 +24,19 @@ function Footer() {
 
         <div className={styles.footer_text}>Made with ❤️ Excel 2022</div>
         <div className={styles.footer_icons}>
-          <a
-            href="https://www.facebook.com/excelmec"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.facebook.com/excelmec" target="_blank">
             <FaFacebookF className={styles.footer_icon} />
           </a>
-          <a
-            href="https://twitter.com/excelmec"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://twitter.com/excelmec">
             <FaTwitter className={styles.footer_icon} />
           </a>
-          <a
-            href="https://www.instagram.com/excelmec/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.instagram.com/excelmec/">
             <FaInstagram className={styles.footer_icon} />
           </a>
-          <a
-            href="https://www.linkedin.com/company/excelmec/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.linkedin.com/company/excelmec/">
             <FaLinkedinIn className={styles.footer_icon} />
           </a>
-          <a
-            href="https://www.youtube.com/excelmec"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.youtube.com/excelmec">
             <FaYoutube className={styles.footer_icon} />
           </a>
         </div>
