@@ -90,6 +90,14 @@ function Navbar() {
           <div
             className={styles.navbar__item}
             onClick={() => {
+              router.push("/prizes");
+            }}
+          >
+            Prizes
+          </div>
+          <div
+            className={styles.navbar__item}
+            onClick={() => {
               router.push("/leaderboard");
             }}
           >
@@ -183,6 +191,15 @@ function Navbar() {
                   className={styles.navbar__item}
                 >
                   How to Play
+                </div>
+                <div
+                  onClick={() => {
+                    router.push("/prizes");
+                    handleDrawerClose();
+                  }}
+                  className={styles.navbar__item}
+                >
+                  Prizes
                 </div>
                 <div
                   onClick={() => {
