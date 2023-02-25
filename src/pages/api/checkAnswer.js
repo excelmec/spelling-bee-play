@@ -5,7 +5,6 @@ import connectDB from "../../utils/connectDB";
 import axios from "axios";
 
 export default async function handler(req, res) {
-
   var checkWord = require("check-word"),
     words = checkWord("en");
   async function getScore(questionId, answer) {
@@ -39,6 +38,11 @@ export default async function handler(req, res) {
       // console.log(req.body);
       const accessToken = req.headers.authorization.split(" ")[1];
       //console.log(accessToken);
+      if (answer.length < 4) {
+        res.status(500).json({ message: "Answer is not a valid word." });
+        return;
+      }
+
       const response = await axios.get(
         process.env.NEXT_PUBLIC_PROFILE_BACKEND_URL + "/profile/view",
         {
@@ -61,8 +65,32 @@ export default async function handler(req, res) {
             .json({ message: "You have already answered this word" });
           return;
         }
+        if (userAnswers.score.length >= 4) {
+          let temp = false;
+          for (let i = 0; i < answer.length; i++) {
+            if (answer[i] === question.mainLetter) {
+              temp = true;
+              break;
+            }
+          }
+          if (!temp) {
+            res.status(500).json({ message: "Main Letter Not Present." });
+            return;
+          }
+        }
       }
-
+      for (let i = 0; i < answer.length; i++) {
+        let tempLetters = [];
+        if (userAnswers.score.length >= 4) {
+          tempLetters = question.letters.concat(question.mainLetter);
+        } else {
+          tempLetters = question.letters;
+        }
+        if (!tempLetters.includes(answer[i])) {
+          res.status(500).json({ message: "Invalid Word" });
+          return;
+        }
+      }
       const aldreadyAnswered = question.answers.find(
         (a) => a.answer === answer
       );
