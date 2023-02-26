@@ -80,12 +80,7 @@ export default async function handler(req, res) {
         }
       }
       for (let i = 0; i < answer.length; i++) {
-        let tempLetters = [];
-        if (userAnswers.score.length >= 4) {
-          tempLetters = question.letters.concat(question.mainLetter);
-        } else {
-          tempLetters = question.letters;
-        }
+        let tempLetters = question.letters.concat(question.mainLetter);
         if (!tempLetters.includes(answer[i])) {
           res.status(500).json({ message: "Invalid Word" });
           return;
